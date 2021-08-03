@@ -23,12 +23,18 @@ namespace Scripts.Components
         {
             float inputH = Input.GetAxis("Horizontal");
             float inputV = Input.GetAxis("Vertical");
-
-            float rotation = inputH * _moveSpeed * Time.deltaTime;
+            
             float speed = inputV * _moveSpeed * Time.deltaTime;
-            float angle = rotation * _rotationSpeed * Time.deltaTime;
+            float angle = inputH * _rotationSpeed * Time.deltaTime;
 
-            _rotationTime = inputH != 0f ? _rotationTime + Time.deltaTime : 0f;
+            if (inputH != 0f)
+            {
+                _rotationTime += Time.deltaTime;
+            }
+            else
+            {
+                _rotationTime = 0f;
+            }
 
             Rotate(angle, _passiveRotation * Time.deltaTime);
             Move(speed);
@@ -38,9 +44,8 @@ namespace Scripts.Components
         {
             float speedFactor = _rotationCurve.Evaluate(_rotationTime);
             Debug.Log(speedFactor);
-            Quaternion rotation = Quaternion.AngleAxis(deltaAngle * speedFactor, Vector3.up); /* *
-                                  Quaternion.AngleAxis(passiveRotation, Vector3.forward);*/
-            transform.rotation *= rotation;
+            Quaternion rotation = Quaternion.AngleAxis(deltaAngle * speedFactor, Vector3.forward) * Quaternion.AngleAxis(passiveRotation, transform.up);
+            transform.rotation = rotation * transform.rotation;
         }
 
         private void Move(float speed)
