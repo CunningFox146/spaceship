@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 namespace Scripts.Components
@@ -8,11 +7,11 @@ namespace Scripts.Components
     public class PlayerController : MonoBehaviour
     {
         [SerializeField] private AnimationCurve _rotationCurve;
+        [SerializeField] private float _passiveRotation = 1f;
         [SerializeField] private float _moveSpeed = 90f;
         [SerializeField] private float _rotationSpeed = 180f;
 
         private Rigidbody _rb;
-        private Quaternion _rotation;
         private float _rotationTime;
 
         void Awake()
@@ -29,18 +28,19 @@ namespace Scripts.Components
             float speed = inputV * _moveSpeed * Time.deltaTime;
             float angle = rotation * _rotationSpeed * Time.deltaTime;
 
+            _rotationTime = inputH != 0f ? _rotationTime + Time.deltaTime : 0f;
 
-            _rotationTime = inputH > 0f ? _rotationTime + Time.deltaTime : 0f;
-
-            Rotate(angle);
+            Rotate(angle, _passiveRotation * Time.deltaTime);
             Move(speed);
         }
 
-        private void Rotate(float deltaAngle)
+        private void Rotate(float deltaAngle, float passiveRotation)
         {
             float speedFactor = _rotationCurve.Evaluate(_rotationTime);
             Debug.Log(speedFactor);
-            transform.rotation *= Quaternion.AngleAxis(deltaAngle * speedFactor, Vector3.up);
+            Quaternion rotation = Quaternion.AngleAxis(deltaAngle * speedFactor, Vector3.up); /* *
+                                  Quaternion.AngleAxis(passiveRotation, Vector3.forward);*/
+            transform.rotation *= rotation;
         }
 
         private void Move(float speed)
