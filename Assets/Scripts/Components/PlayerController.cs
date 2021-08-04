@@ -8,9 +8,10 @@ namespace Scripts.Components
     {
         [SerializeField] private AnimationCurve _rotationCurve;
         [SerializeField] private float _passiveRotation = 1f;
-        [Range(0f, 1f)] [SerializeField] private float _angularVelMod = 0f;
         [SerializeField] private float _moveSpeed = 90f;
         [SerializeField] private float _rotationSpeed = 180f;
+        [Range(0f, 1f)] [SerializeField] private float _angularVelMod = 0f;
+        [SerializeField] private ParticleSystem _fire;
 
         private Rigidbody _rb;
         private float _rotationTime;
@@ -39,6 +40,19 @@ namespace Scripts.Components
             }
 
             Rotate(angle, _passiveRotation * Time.deltaTime);
+            UpdateFire();
+        }
+
+        private void UpdateFire()
+        {
+            if (_inputV != 0f)
+            {
+                _fire.Play();
+            }
+            else
+            {
+                _fire.Stop();
+            }
         }
 
         void FixedUpdate()
