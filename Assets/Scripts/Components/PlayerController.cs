@@ -13,6 +13,8 @@ namespace Scripts.Components
 
         private Rigidbody _rb;
         private float _rotationTime;
+        private float _inputV;
+        private float _inputH;
 
         void Awake()
         {
@@ -21,13 +23,12 @@ namespace Scripts.Components
 
         void Update()
         {
-            float inputH = Input.GetAxis("Horizontal");
-            float inputV = Input.GetAxis("Vertical");
+            _inputV = Input.GetAxis("Vertical");
+            _inputH = Input.GetAxis("Horizontal");
             
-            float speed = inputV * _moveSpeed * Time.deltaTime;
-            float angle = inputH * _rotationSpeed * Time.deltaTime;
+            float angle = _inputH * _rotationSpeed * Time.deltaTime;
 
-            if (inputH != 0f)
+            if (_inputH != 0f)
             {
                 _rotationTime += Time.deltaTime;
             }
@@ -37,20 +38,24 @@ namespace Scripts.Components
             }
 
             Rotate(angle, _passiveRotation * Time.deltaTime);
+        }
+
+        void FixedUpdate()
+        {
+            float speed = _inputV * _moveSpeed * Time.deltaTime;
             Move(speed);
         }
 
         private void Rotate(float deltaAngle, float passiveRotation)
         {
             float speedFactor = _rotationCurve.Evaluate(_rotationTime);
-            Debug.Log(speedFactor);
             Quaternion rotation = Quaternion.AngleAxis(deltaAngle * speedFactor, Vector3.forward) * Quaternion.AngleAxis(passiveRotation, transform.up);
             transform.rotation = rotation * transform.rotation;
         }
 
         private void Move(float speed)
         {
-            _rb.AddRelativeForce(Vector3.forward * speed, ForceMode.Acceleration);
+            _rb.AddForce(transform.up * speed, ForceMode.Acceleration);
         }
     }
 }
