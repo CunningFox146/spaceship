@@ -12,6 +12,7 @@ namespace Scripts.Components
         [SerializeField] private float _rotationSpeed = 180f;
         [SerializeField] private float _maxAngleFactor = 30f;
         [SerializeField] private ParticleSystem _fire;
+        [SerializeField] private GameObject _collider;
 
         private Rigidbody _rb;
         private float _rotationTime;
@@ -21,6 +22,11 @@ namespace Scripts.Components
         void Awake()
         {
             _rb = GetComponent<Rigidbody>();
+        }
+
+        void Start()
+        {
+            BoundsManager.Inst.Track(gameObject);
         }
 
         void Update()

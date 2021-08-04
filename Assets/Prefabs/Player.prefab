@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 5165225956163029153}
   - component: {fileID: 7453387739556548494}
   - component: {fileID: 6128301809785314892}
-  - component: {fileID: 8069022865185390729}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -108,20 +107,9 @@ MonoBehaviour:
   _passiveRotation: 0
   _moveSpeed: 100
   _rotationSpeed: 360
-  _angularVelMod: 0
+  _maxAngleFactor: 30
   _fire: {fileID: 2765651273219553464}
---- !u!114 &8069022865185390729
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 968601462265147206}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 55c1b7d643534824da1719a6f6c208e0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  _collider: {fileID: 6088937866718726302}
 --- !u!1 &1985436242078300667
 GameObject:
   m_ObjectHideFlags: 0
@@ -4987,6 +4975,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b3c0a61dfe701344d819eb701e83f4b7, type: 3}
+--- !u!1 &6088937866718726302 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3368916564331560363, guid: b3c0a61dfe701344d819eb701e83f4b7, type: 3}
+  m_PrefabInstance: {fileID: 8809194247570371893}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &6902769278970335780 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2705286137011316497, guid: b3c0a61dfe701344d819eb701e83f4b7, type: 3}
