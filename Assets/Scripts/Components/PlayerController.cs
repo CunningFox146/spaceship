@@ -8,6 +8,7 @@ namespace Scripts.Components
     {
         [SerializeField] private AnimationCurve _rotationCurve;
         [SerializeField] private float _passiveRotation = 1f;
+        [Range(0f, 1f)] [SerializeField] private float _angularVelMod = 0f;
         [SerializeField] private float _moveSpeed = 90f;
         [SerializeField] private float _rotationSpeed = 180f;
 
@@ -46,11 +47,21 @@ namespace Scripts.Components
             Move(speed);
         }
 
-        private void Rotate(float deltaAngle, float passiveRotation)
+        private void Rotate(float deltaAngle, float passiveRotation, float velMod = 1f)
         {
             float speedFactor = _rotationCurve.Evaluate(_rotationTime);
-            Quaternion rotation = Quaternion.AngleAxis(deltaAngle * speedFactor, Vector3.up) * Quaternion.AngleAxis(passiveRotation, transform.forward);
+            Quaternion rotation = Quaternion.AngleAxis(deltaAngle * speedFactor, Vector3.up);
+            if (passiveRotation > 0f)
+            {
+                rotation *= Quaternion.AngleAxis(passiveRotation, transform.forward);
+            }
             transform.rotation = rotation * transform.rotation;
+
+            if (_angularVelMod < 1f)
+            {
+                _rb.angularVelocity *= _angularVelMod;
+
+            }
         }
 
         private void Move(float speed)

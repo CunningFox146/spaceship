@@ -103,7 +103,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  _passiveRotation: 3000
+  _passiveRotation: 0
   _moveSpeed: 100
   _rotationSpeed: 360
 --- !u!1001 &8809194247570371893
