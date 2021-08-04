@@ -53,9 +53,14 @@ namespace Scripts.Components
         {
             if (_inputV != 0f)
             {
-                _fire.Play();
+                if (!_fire.isPlaying)
+                {
+                    _fire.Play();
+                }
+                return;
             }
-            else
+
+            if (_fire.isPlaying)
             {
                 _fire.Stop();
             }
