@@ -49,13 +49,13 @@ namespace Scripts.Components
         private void Rotate(float deltaAngle, float passiveRotation)
         {
             float speedFactor = _rotationCurve.Evaluate(_rotationTime);
-            Quaternion rotation = Quaternion.AngleAxis(deltaAngle * speedFactor, Vector3.forward) * Quaternion.AngleAxis(passiveRotation, transform.up);
+            Quaternion rotation = Quaternion.AngleAxis(deltaAngle * speedFactor, Vector3.up) * Quaternion.AngleAxis(passiveRotation, transform.forward);
             transform.rotation = rotation * transform.rotation;
         }
 
         private void Move(float speed)
         {
-            _rb.AddForce(transform.up * speed, ForceMode.Acceleration);
+            _rb.AddForce(transform.forward * speed, ForceMode.Acceleration);
         }
     }
 }
