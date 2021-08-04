@@ -10,7 +10,7 @@ namespace Scripts.Components
         [SerializeField] private float _passiveRotation = 1f;
         [SerializeField] private float _moveSpeed = 90f;
         [SerializeField] private float _rotationSpeed = 180f;
-        [Range(0f, 1f)] [SerializeField] private float _angularVelMod = 0f;
+        [SerializeField] private float _maxAngleFactor = 30f;
         [SerializeField] private ParticleSystem _fire;
 
         private Rigidbody _rb;
@@ -70,17 +70,19 @@ namespace Scripts.Components
                 rotation *= Quaternion.AngleAxis(passiveRotation, transform.forward);
             }
             transform.rotation = rotation * transform.rotation;
-
-            if (_angularVelMod < 1f)
-            {
-                _rb.angularVelocity *= _angularVelMod;
-
-            }
         }
 
+        // 1. Get current velocity and desired velocity.
+        // 2. Get angle between them. This angle will be a modifying factor later.
+        // 3. Invert desired velocity vector and multiply it by modifying angle factor.
         private void Move(float speed)
         {
-            _rb.AddForce(transform.forward * speed, ForceMode.Acceleration);
+            var vel = _rb.velocity;
+            var targetVel = transform.forward * speed;
+
+            float angleFactor = Vector3.Angle(vel, targetVel) / _maxAngleFactor; // How much force do we need to fix our direction
+
+            _rb.AddForce(targetVel + (-vel * angleFactor), ForceMode.Acceleration);
         }
     }
 }
