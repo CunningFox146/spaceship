@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Scripts.Components;
@@ -37,7 +38,7 @@ public class BoundsTrigger : MonoBehaviour
     private Vector3 ScreenToWorldPos(Vector3 pos)
     {
         Ray ray = _camera.ScreenPointToRay(pos);
-        if (Physics.Raycast(ray, out var hit))
+        if (Physics.Raycast(ray, out var hit, int.MaxValue, LayerMask.GetMask("Bounds"))) // Idk if it's better to use 1<<8 or GetMask()
         {
             return hit.point;
         }
