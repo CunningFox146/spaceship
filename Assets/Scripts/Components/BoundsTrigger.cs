@@ -32,8 +32,8 @@ public class BoundsTrigger : MonoBehaviour
 
         transform.localScale = new Vector3(maxPos.x - minPos.x + _offset, 10f, maxPos.z - minPos.z + _offset);
 
-        _bounds.MaxPos = maxPos;
-        _bounds.MinPos = minPos;
+        _bounds.maxPos = maxPos;
+        _bounds.minPos = minPos;
     }
 
     private Vector3 ScreenToWorldPos(Vector3 pos)

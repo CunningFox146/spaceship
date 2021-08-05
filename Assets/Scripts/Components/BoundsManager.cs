@@ -8,8 +8,8 @@ namespace Scripts.Components
     {
         [SerializeField] private float _offset; // Temp
 
-        public Vector3 MinPos;
-        public Vector3 MaxPos;
+        public Vector3 minPos;
+        public Vector3 maxPos;
 
         private List<GameObject> _inBoundsList;
 
@@ -37,14 +37,14 @@ namespace Scripts.Components
         
         public void Teleport(GameObject obj)
         {
-            if (!IsInBounds(obj)) return;
+            //if (!IsInBounds(obj)) return;
 
             var pos = obj.transform.position;
             var teleportPos = CalculateNewPos(pos);
 
             if (teleportPos != pos)
             {
-                Debug.Log($"Teleport {obj}");
+                //Debug.Log($"Teleport {obj}");
                 obj.transform.position = teleportPos;
             }
 
@@ -53,24 +53,24 @@ namespace Scripts.Components
 
         private Vector3 CalculateNewPos(Vector3 pos)
         {
-            if (pos.x < MinPos.x)
+            if (pos.x < minPos.x)
             {
-                return new Vector3(MaxPos.x - _offset, pos.y, pos.z);
+                return new Vector3(maxPos.x - _offset, pos.y, pos.z);
             }
 
-            if (pos.x > MaxPos.x)
+            if (pos.x > maxPos.x)
             {
-                return new Vector3(MinPos.x + _offset, pos.y, pos.z);
+                return new Vector3(minPos.x + _offset, pos.y, pos.z);
             }
 
-            if (pos.z < MinPos.z)
+            if (pos.z < minPos.z)
             {
-                return new Vector3(pos.x, pos.y, MaxPos.z - _offset);
+                return new Vector3(pos.x, pos.y, maxPos.z - _offset);
             }
 
-            if (pos.z > MaxPos.z)
+            if (pos.z > maxPos.z)
             {
-                return new Vector3(pos.x, pos.y, MinPos.z + _offset);
+                return new Vector3(pos.x, pos.y, minPos.z + _offset);
             }
 
             return pos;

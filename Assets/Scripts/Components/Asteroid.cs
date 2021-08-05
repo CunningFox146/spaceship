@@ -20,14 +20,15 @@ namespace Scripts.Components
         {
             BoundsManager.Inst.Track(gameObject);
 
-            Launch(Vector3.right, 2f);
+            //Launch(Vector3.right, 2f);
         }
         
-        public void Launch(Vector3 direction, float speed)
+        public void Launch(float speed)
         {
-            _rb.velocity = direction * speed;
-            var perpendicular = -Vector2.Perpendicular(new Vector2(direction.x, direction.z)); // To set rotation to desired location we need an inverted perpendicular
-            _rb.angularVelocity = new Vector3(perpendicular.x, 0, perpendicular.y) * (speed * 0.75f);
+            transform.LookAt(Vector3.zero);
+            _rb.velocity = transform.forward * speed;
+            //var perpendicular = -Vector2.Perpendicular(new Vector2(direction.x, direction.z)); // To set rotation to desired location we need an inverted perpendicular
+            //_rb.angularVelocity = new Vector3(perpendicular.x, 0, perpendicular.y) * (speed * 0.75f);
         }
     }
 }
