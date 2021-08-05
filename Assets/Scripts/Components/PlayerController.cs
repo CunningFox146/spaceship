@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Scripts.Components
 {
-    public class PlayerController : MonoBehaviour
+    public class PlayerController : MonoBehaviour, IBoundsTrackable
     {
         [SerializeField] private AnimationCurve _rotationCurve;
         [SerializeField] private float _passiveRotation = 1f;
@@ -19,6 +19,8 @@ namespace Scripts.Components
         private float _inputV;
         private float _inputH;
 
+        public float BoundsOffset => transform.localScale.x;
+
         void Awake()
         {
             _rb = GetComponent<Rigidbody>();
@@ -26,7 +28,7 @@ namespace Scripts.Components
 
         void Start()
         {
-            //BoundsManager.Inst.Track(gameObject);
+            BoundsManager.Inst.Track(gameObject);
         }
 
         void Update()

@@ -61,19 +61,20 @@ namespace Scripts.Components
 
         private Vector3 GetSpawnPosition()
         {
-            var bounds = BoundsManager.Inst;
-            float maxX = bounds.maxPos.x;
-            float maxZ = bounds.maxPos.z;
-            float minX = bounds.minPos.x;
-            float minZ = bounds.minPos.z;
+            return Vector3.down;
+            //var bounds = BoundsManager.Inst;
+            //float maxX = bounds.maxPos.x;
+            //float maxZ = bounds.maxPos.z;
+            //float minX = bounds.minPos.x;
+            //float minZ = bounds.minPos.z;
 
-            return Random.Range(0, 3) switch
-            {
-                0 => new Vector3(minX - _spawnOffset, 0f, Random.Range(minZ, maxZ)),
-                1 => new Vector3(Random.Range(minX, maxX), 0f, minZ - _spawnOffset),
-                2 => new Vector3(maxX + _spawnOffset, 0f, Random.Range(minZ, maxZ)),
-                _ => new Vector3(Random.Range(minX, maxX), 0f, maxZ - _spawnOffset),
-            };
+            //return Random.Range(0, 3) switch
+            //{
+            //    0 => new Vector3(minX - _spawnOffset, 0f, Random.Range(minZ, maxZ)),
+            //    1 => new Vector3(Random.Range(minX, maxX), 0f, minZ - _spawnOffset),
+            //    2 => new Vector3(maxX + _spawnOffset, 0f, Random.Range(minZ, maxZ)),
+            //    _ => new Vector3(Random.Range(minX, maxX), 0f, maxZ - _spawnOffset),
+            //};
         }
         
     }

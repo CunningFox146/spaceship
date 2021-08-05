@@ -4,12 +4,14 @@ using UnityEngine;
 
 namespace Scripts.Components
 {
-    public class Asteroid : MonoBehaviour
+    public class Asteroid : MonoBehaviour, IBoundsTrackable
     {
         [SerializeField] private bool _isShard;
         [SerializeField] private GameObject _collider;
 
         private Rigidbody _rb;
+
+        public float BoundsOffset => transform.localScale.x;
 
         void Awake()
         {
