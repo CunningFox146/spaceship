@@ -55,22 +55,22 @@ namespace Scripts.Components
         {
             if (pos.x < MinPos.x)
             {
-                return new Vector3(MaxPos.x - _offset, 0, pos.z);
+                return new Vector3(MaxPos.x - _offset, pos.y, pos.z);
             }
 
             if (pos.x > MaxPos.x)
             {
-                return new Vector3(MinPos.x + _offset, 0, pos.z);
+                return new Vector3(MinPos.x + _offset, pos.y, pos.z);
             }
 
             if (pos.z < MinPos.z)
             {
-                return new Vector3(pos.x, 0, MaxPos.z - _offset);
+                return new Vector3(pos.x, pos.y, MaxPos.z - _offset);
             }
 
             if (pos.z > MaxPos.z)
             {
-                return new Vector3(pos.x, 0, MinPos.z + _offset);
+                return new Vector3(pos.x, pos.y, MinPos.z + _offset);
             }
 
             return pos;

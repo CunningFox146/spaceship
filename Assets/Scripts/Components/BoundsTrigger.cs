@@ -6,6 +6,7 @@ using UnityEngine;
 
 public class BoundsTrigger : MonoBehaviour
 {
+    [SerializeField] private float _offset = 1f;
     private BoundsManager _bounds;
     private Camera _camera;
 
@@ -29,7 +30,7 @@ public class BoundsTrigger : MonoBehaviour
         Vector3 minPos = ScreenToWorldPos(Vector3.zero);
         Vector3 maxPos = ScreenToWorldPos(new Vector3(_camera.pixelWidth, _camera.pixelHeight, 0f));
 
-        transform.localScale = new Vector3(maxPos.x - minPos.x, 10f, maxPos.z - minPos.z);
+        transform.localScale = new Vector3(maxPos.x - minPos.x + _offset, 10f, maxPos.z - minPos.z + _offset);
 
         _bounds.MaxPos = maxPos;
         _bounds.MinPos = minPos;
