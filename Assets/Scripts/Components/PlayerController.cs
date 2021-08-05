@@ -26,7 +26,7 @@ namespace Scripts.Components
 
         void Start()
         {
-            BoundsManager.Inst.Track(gameObject);
+            //BoundsManager.Inst.Track(gameObject);
         }
 
         void Update()

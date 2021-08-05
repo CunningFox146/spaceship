@@ -6,10 +6,11 @@ namespace Scripts.Components
 {
     public class BoundsManager : Singleton<BoundsManager>
     {
-        [SerializeField] private float _offset; // Temp
-
         public Vector3 minPos;
         public Vector3 maxPos;
+
+        public float worldWidth = 0f;
+        public float worldHeight = 0f;
 
         private List<GameObject> _inBoundsList;
 
@@ -18,6 +19,19 @@ namespace Scripts.Components
             base.Awake();
 
             _inBoundsList = new List<GameObject>();
+
+            RecalculateBounds();
+        }
+
+        private void RecalculateBounds()
+        {
+            var cam = Camera.main;
+            var point = cam.ScreenToWorldPoint(new Vector2(Screen.width, Screen.height));
+            worldWidth = point.x;
+            worldHeight = point.y;
+
+            GameObject.CreatePrimitive(PrimitiveType.Capsule).transform.position =
+                new Vector3(worldWidth, 0f, worldHeight);
         }
 
         public void Track(GameObject obj)
@@ -55,22 +69,22 @@ namespace Scripts.Components
         {
             if (pos.x < minPos.x)
             {
-                return new Vector3(maxPos.x - _offset, pos.y, pos.z);
+                return new Vector3(maxPos.x, pos.y, pos.z);
             }
 
             if (pos.x > maxPos.x)
             {
-                return new Vector3(minPos.x + _offset, pos.y, pos.z);
+                return new Vector3(minPos.x, pos.y, pos.z);
             }
 
             if (pos.z < minPos.z)
             {
-                return new Vector3(pos.x, pos.y, maxPos.z - _offset);
+                return new Vector3(pos.x, pos.y, maxPos.z);
             }
 
             if (pos.z > maxPos.z)
             {
-                return new Vector3(pos.x, pos.y, minPos.z + _offset);
+                return new Vector3(pos.x, pos.y, minPos.z);
             }
 
             return pos;
