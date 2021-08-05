@@ -31,7 +31,7 @@ namespace Scripts.Components
             worldHeight = point.y;
 
             GameObject.CreatePrimitive(PrimitiveType.Capsule).transform.position =
-                new Vector3(worldWidth, 0f, worldHeight);
+                new Vector3(worldWidth * 0.5f, 0f, worldHeight * 0.5f);
         }
 
         public void Track(GameObject obj)
