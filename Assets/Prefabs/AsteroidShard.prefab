@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7375271624517147565}
   - component: {fileID: 1491679980168358182}
   - component: {fileID: 6913636419371344188}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: AsteroidShard
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -143,6 +143,10 @@ PrefabInstance:
     - target: {fileID: 8003495884289897023, guid: 2408f749a3ad04e23b2abe82997c4b61, type: 3}
       propertyPath: m_Name
       value: Collider
+      objectReference: {fileID: 0}
+    - target: {fileID: 8003495884289897023, guid: 2408f749a3ad04e23b2abe82997c4b61, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2408f749a3ad04e23b2abe82997c4b61, type: 3}

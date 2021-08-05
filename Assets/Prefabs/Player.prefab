@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5165225956163029153}
   - component: {fileID: 7453387739556548494}
   - component: {fileID: 6128301809785314892}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -121,7 +121,7 @@ GameObject:
   - component: {fileID: 8264636098230564051}
   - component: {fileID: 2765651273219553464}
   - component: {fileID: 7890882757896371392}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: FIre
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4968,6 +4968,10 @@ PrefabInstance:
     - target: {fileID: 3368916564331560363, guid: b3c0a61dfe701344d819eb701e83f4b7, type: 3}
       propertyPath: m_Name
       value: Spaceship
+      objectReference: {fileID: 0}
+    - target: {fileID: 3368916564331560363, guid: b3c0a61dfe701344d819eb701e83f4b7, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 9144030251778499809, guid: b3c0a61dfe701344d819eb701e83f4b7, type: 3}
       propertyPath: m_Convex
