@@ -10,9 +10,9 @@ namespace Scripts.Util
         /// <param name="baseVal">Minimum value</param>
         /// <param name="randomVal">Maximum delta</param>
         /// <returns></returns>
-        public static float RandomWithVariance(float baseVal, float randomVal)
+        public static float WithVariance(float baseVal, float randomVal)
         {
-            return baseVal + (Random.Range(0f, 1f) * 2 * randomVal - randomVal);
+            return baseVal + (Random.Range(0f, 1f) * randomVal);
         }
 
         public static bool RandomBool(float trueChance)
