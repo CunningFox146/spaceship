@@ -6,10 +6,16 @@ namespace Scripts.Components
 {
     public class BulletCollider : MonoBehaviour
     {
-        void OnCollisionEnter(Collision other)
+        private Bullet _bullet;
+
+        void Awake()
         {
-            Debug.Log($"OnCollisionEnter{other}");
-            var asteroid = other.gameObject.GetComponent<Asteroid>();
+            _bullet = transform.root.GetComponent<Bullet>();
+        }
+
+        void OnTriggerEnter(Collider other)
+        {
+            var asteroid = other.transform.root.GetComponent<Asteroid>();
             if (asteroid != null)
             {
                 asteroid.OnHit(other);

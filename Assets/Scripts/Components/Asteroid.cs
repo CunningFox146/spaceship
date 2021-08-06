@@ -25,9 +25,9 @@ namespace Scripts.Components
             //Launch(Vector3.right, 2f);
         }
 
-        public void OnHit(Collision other)
+        public void OnHit(Collider other)
         {
-            Instantiate(_explosion).transform.position = other.contacts[0].point;
+            Instantiate(_explosion).transform.position = transform.position;
         }
         
         public void Launch(float speed)
@@ -58,7 +58,7 @@ namespace Scripts.Components
                 yield return null;
             }
 
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(1f); // To make sure it's not on the edge, bc it looks ugly
 
             var targetLayer = LayerMask.NameToLayer("Bounds");
             gameObject.layer = targetLayer;

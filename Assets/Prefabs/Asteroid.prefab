@@ -76,7 +76,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _isShard: 0
-  _explosion: {fileID: 0}
+  _explosion: {fileID: 4198486382001218002, guid: a555f93bf917976409b63dbd2ef15006, type: 3}
   _collider: {fileID: 2643279249265327079}
 --- !u!1001 &8094255835969127573
 PrefabInstance:
