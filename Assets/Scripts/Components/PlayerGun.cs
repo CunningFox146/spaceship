@@ -24,7 +24,7 @@ namespace Scripts.Components
             }
 
             _fireCooldown = 0f;
-            var bullet = ObjectPooler.Inst.Get(_bullet);
+            var bullet = ObjectPooler.Inst.Get(PoolItem.Bullet);
             bullet.transform.position = transform.position;
             bullet.GetComponent<Bullet>().Launch(gameObject, coll);
         }

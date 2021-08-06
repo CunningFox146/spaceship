@@ -6,9 +6,10 @@ namespace Scripts.Components
 {
     public class Asteroid : MonoBehaviour, IBoundsTrackable
     {
-        [SerializeField] private bool _isShard;
+        [SerializeField] private int _shardCount = 3;
+        [SerializeField] private bool _isShard = false;
         [SerializeField] private GameObject _explosion;
-        [SerializeField] private GameObject _collider;
+        [SerializeField] private GameObject _shard;
 
         private Rigidbody _rb;
         private Coroutine _layerCoroutine;
@@ -26,15 +27,9 @@ namespace Scripts.Components
         }
 
         public void OnBoundsReached() => BoundsManager.Inst.TryTeleport(gameObject);
-
-        public void OnHit(Collider other)
-        {
-            Instantiate(_explosion).transform.position = transform.position;
-        }
         
         public void Launch(float speed)
         {
-            transform.LookAt(Vector3.zero);
             _rb.velocity = transform.forward * speed;
 
             var targetLayer = LayerMask.NameToLayer("Default");
@@ -76,6 +71,30 @@ namespace Scripts.Components
                 StopCoroutine(_layerCoroutine);
                 _layerCoroutine = null;
             }
+        }
+
+        public void OnAttacked(Collision collision)
+        {
+            BoundsManager.Inst.StopTracking(gameObject);
+            ObjectPooler.Inst.Return(_isShard ? PoolItem.MeteorShard : PoolItem.Meteor, gameObject);
+
+            if (!_isShard)
+            {
+                float range = 0.5f;
+                for (int i = 1; i <= _shardCount; i++)
+                {
+                    float percent = (float)i / (float)_shardCount;
+                    var offset = new Vector3(Mathf.Cos(percent * Mathf.PI * 2) * range, 0f,
+                        Mathf.Sin(percent * Mathf.PI * 2) * range);
+
+                    var shard = ObjectPooler.Inst.Get(PoolItem.MeteorShard, transform.position + offset);
+                    shard.transform.LookAt(-transform.position);
+                    shard.GetComponent<Asteroid>().Launch(2f);
+                }
+            }
+
+            var fx = Instantiate(_explosion);
+            fx.transform.position = collision.contacts[0].point;
         }
     }
 }

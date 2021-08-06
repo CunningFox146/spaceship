@@ -25,6 +25,7 @@ GameObject:
   - component: {fileID: 2801578496564309090}
   - component: {fileID: 4668700535161367059}
   - component: {fileID: 1697363794619387391}
+  - component: {fileID: 5439016709675942142}
   m_Layer: 8
   m_Name: Asteroid
   m_TagString: Untagged
@@ -77,7 +78,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _isShard: 0
   _explosion: {fileID: 4198486382001218002, guid: a555f93bf917976409b63dbd2ef15006, type: 3}
-  _collider: {fileID: 2643279249265327079}
+  _shard: {fileID: 4647980962700241004, guid: 1f864f29d68061144a7bf23b505881be, type: 3}
+--- !u!114 &5439016709675942142
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7482019421382327251}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 902b8e2bc3e017c43acfa0e19af9da11, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _asteroid: {fileID: 1697363794619387391}
 --- !u!1001 &8094255835969127573
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -58,6 +58,20 @@ namespace Scripts.Components
         }
 #endif
 
+        private GameObject CreateAsteroid(PoolItem type)
+        {
+            var asteroid = ObjectPooler.Inst.Get(type);
+
+            var pos = GetSpawnPosition();
+            asteroid.transform.position = pos;
+            asteroid.transform.LookAt(Vector3.zero);
+            asteroid.GetComponent<Asteroid>().Launch(AsteroidSpeed);
+
+            _asteriods.Add(asteroid);
+
+            return asteroid;
+        }
+
         private void ReleaseWave()
         {
             if (_waves.Length - 1 < _wave)
@@ -65,19 +79,17 @@ namespace Scripts.Components
                 return;
             }
 
-            var pooler = ObjectPooler.Inst;
+            
             var data = _waves[_wave];
 
             for (int i = 0; i < data.asteroidsCount; i++)
             {
-                var pos = GetSpawnPosition();
+                CreateAsteroid(PoolItem.Meteor);
+            }
 
-                var asteroid = pooler.Get(_asteroid);
-                _asteriods.Add(asteroid);
-                Debug.Log($"Spawned at {pos}");
-                asteroid.transform.position = pos;
-                var cmp = asteroid.GetComponent<Asteroid>();
-                cmp.Launch(AsteroidSpeed);
+            for (int i = 0; i < data.asteroidsCount; i++)
+            {
+                CreateAsteroid(PoolItem.MeteorShard);
             }
 
             _wave++;

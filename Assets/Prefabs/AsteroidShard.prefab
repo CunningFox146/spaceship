@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 7375271624517147565}
   - component: {fileID: 1491679980168358182}
   - component: {fileID: 6913636419371344188}
+  - component: {fileID: 796355527249198064}
   m_Layer: 8
   m_Name: AsteroidShard
   m_TagString: Untagged
@@ -61,9 +62,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5da9ce35697ec247b2803a633143fea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _shardCount: 3
   _isShard: 1
-  _explosion: {fileID: 0}
-  _collider: {fileID: 7488385678545981395}
+  _explosion: {fileID: 4198486382001218002, guid: a555f93bf917976409b63dbd2ef15006, type: 3}
+  _shard: {fileID: 0}
+--- !u!114 &796355527249198064
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4647980962700241004}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 902b8e2bc3e017c43acfa0e19af9da11, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _asteroid: {fileID: 6913636419371344188}
 --- !u!64 &3596674271373394950
 MeshCollider:
   m_ObjectHideFlags: 0

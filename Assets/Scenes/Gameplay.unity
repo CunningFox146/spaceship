@@ -155,10 +155,13 @@ MonoBehaviour:
   _pools:
   - prefab: {fileID: 7482019421382327251, guid: 00b883283881ec84d8a70e25b1baebe5, type: 3}
     count: 10
+    item: 0
   - prefab: {fileID: 4647980962700241004, guid: 1f864f29d68061144a7bf23b505881be, type: 3}
     count: 50
+    item: 1
   - prefab: {fileID: 1949764175230554736, guid: 9128891cf8b56d04d9e8ddd28c1d8bc7, type: 3}
     count: 100
+    item: 2
 --- !u!4 &168182149
 Transform:
   m_ObjectHideFlags: 0
@@ -5414,7 +5417,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5865272250376690416, guid: c62ccbbbe9a87624c8042d73b3a81b96, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: c62ccbbbe9a87624c8042d73b3a81b96, type: 3}
 --- !u!1 &1987024258
 GameObject:

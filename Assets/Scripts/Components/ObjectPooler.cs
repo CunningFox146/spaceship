@@ -8,57 +8,58 @@ public class ObjectPooler : Singleton<ObjectPooler>
 {
     [SerializeField] private List<ObjectPool> _pools;
 
-    private Dictionary<GameObject, Stack<GameObject>> _objects;
-
+    private Dictionary<PoolItem, Queue<GameObject>> _objects;
+    
     public override void Awake()
     {
         base.Awake();
 
-        _objects = new Dictionary<GameObject, Stack<GameObject>>();
-
+        _objects = new Dictionary<PoolItem, Queue<GameObject>>();
         foreach (ObjectPool pool in _pools)
         {
-            var objects = new Stack<GameObject>();
-
+            var queue = new Queue<GameObject>();
             for (int i = 0; i < pool.count; i++)
             {
                 var obj = Instantiate(pool.prefab, transform);
                 obj.SetActive(false);
-                objects.Push(obj);
-            }
 
-            _objects.Add(pool.prefab, objects);
+                queue.Enqueue(obj);
+            }
+            _objects.Add(pool.item, queue);
         }
     }
 
-    public GameObject Get(GameObject prefab)
+    public GameObject Get(PoolItem item)
     {
-        if (_objects.Count == 0)
+        var queue = _objects[item];
+
+        if (queue.Count == 0)
         {
-            Debug.LogWarning($"Pool is empty! Object: {prefab}");
-            return Instantiate(prefab);
+            Debug.LogError($"Pool is empty: {item.ToString()}");
+            return null;
         }
 
-        var obj = _objects[prefab].Pop();
-        obj.SetActive(true);
+        var obj = queue.Dequeue();
+
         obj.transform.parent = null;
+        obj.SetActive(true);
 
         return obj;
     }
 
-    public void Return(GameObject obj)
+    public GameObject Get(PoolItem item, Vector3 pos)
     {
-        var prefab = PrefabUtility.GetPrefabInstanceHandle(obj) as GameObject;
+        var obj = Get(item);
 
-        if (prefab == null)
-        {
-            Debug.LogWarning($"Failed to get prefab for game object {obj}");
-            Destroy(obj);
-            return;
-        }
+        obj.transform.position = pos;
 
-        obj.SetActive(false);
+        return obj;
+    }
+
+    public void Return(PoolItem item, GameObject obj)
+    {
         obj.transform.parent = transform;
-        _objects[prefab].Push(obj);
+        obj.SetActive(false);
+        _objects[item].Enqueue(obj);
     }
 }

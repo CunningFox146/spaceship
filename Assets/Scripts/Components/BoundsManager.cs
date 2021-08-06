@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace Scripts.Components
@@ -7,8 +8,7 @@ namespace Scripts.Components
     public class BoundsManager : Singleton<BoundsManager>
     {
         private Dictionary<GameObject, IBoundsTrackable> _inBoundsList;
-
-        //[SerializeProperty("Test")]
+        
         public float BoundsWidth { get; private set; }
         public float BoundsHeight { get; private set; }
 
@@ -23,7 +23,7 @@ namespace Scripts.Components
 
         private void Update()
         {
-            foreach (GameObject obj in _inBoundsList.Keys)
+            foreach (GameObject obj in _inBoundsList.Keys.ToList()) // Maybe this is not that efficient, but modification-friendly
             {
                 if (ShouldTeleport(obj, _inBoundsList[obj].BoundsOffset))
                 {

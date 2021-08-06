@@ -8,9 +8,18 @@ using UnityEngine;
 namespace Scripts
 {
     [Serializable]
-    struct ObjectPool
+    public enum PoolItem
+    {
+        Meteor,
+        MeteorShard,
+        Bullet,
+    }
+
+    [Serializable]
+    public struct ObjectPool
     {
         public GameObject prefab;
         public int count;
+        public PoolItem item;   
     }
 }
