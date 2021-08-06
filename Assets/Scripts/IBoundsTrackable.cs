@@ -1,8 +1,10 @@
-﻿namespace Scripts
+﻿using System;
+
+namespace Scripts
 {
     public interface IBoundsTrackable
     {
         public float BoundsOffset { get; }
-        //public event Action OnTeleport;
+        public void OnBoundsReached();
     }
 }

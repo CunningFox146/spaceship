@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Scripts.Components
 {
-    public class Bullet : MonoBehaviour
+    public class Bullet : MonoBehaviour, IBoundsTrackable
     {
         [SerializeField] private float _speed = 1f;
         [SerializeField] private Collider _collider;
@@ -12,17 +12,22 @@ namespace Scripts.Components
 
         private Rigidbody _rb;
 
+        public float BoundsOffset => transform.localScale.x;
+
         void Awake()
         {
             _rb = GetComponent<Rigidbody>();
         }
 
+        public void OnBoundsReached() => Destroy(gameObject);
+
         public void Launch(GameObject launcher, Collider coll)
         {
-            Physics.IgnoreCollision(_collider, coll);
+            //Physics.IgnoreCollision(_collider, coll);
             _rb.velocity = _speed * launcher.transform.forward;
 
             transform.rotation = Quaternion.Euler(launcher.transform.forward);
         }
+
     }
 }

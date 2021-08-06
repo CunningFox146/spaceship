@@ -8,6 +8,7 @@ namespace Scripts.Components
     {
         private Dictionary<GameObject, IBoundsTrackable> _inBoundsList;
 
+        //[SerializeProperty("Test")]
         public float BoundsWidth { get; private set; }
         public float BoundsHeight { get; private set; }
 
@@ -24,18 +25,20 @@ namespace Scripts.Components
         {
             foreach (GameObject obj in _inBoundsList.Keys)
             {
-                CheckPosition(obj);
+                if (ShouldTeleport(obj, _inBoundsList[obj].BoundsOffset))
+                {
+                    _inBoundsList[obj].OnBoundsReached();
+                }
             }
         }
 
-        private void CheckPosition(GameObject obj)
+        public void TryTeleport(GameObject obj)
         {
             var pos = obj.transform.position;
             var teleportPos = CalculateNewPos(pos, _inBoundsList[obj].BoundsOffset);
 
             if (teleportPos != pos)
             {
-                //Debug.Log($"Teleported: {obj} to {pos}");
                 obj.transform.position = teleportPos;
             }
         }

@@ -11,7 +11,7 @@ namespace Scripts.Components
 
         void Start()
         {
-            var near = Physics.OverlapSphere(transform.position, _radius, 1 << 8);
+            var near = Physics.OverlapSphere(transform.position, _radius);
             foreach (Collider coll in near)
             {
                 Debug.Log($"coll: {coll.gameObject.name}");

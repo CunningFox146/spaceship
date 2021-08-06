@@ -58,6 +58,14 @@ namespace Scripts.Components
             }
         }
 
+        void FixedUpdate()
+        {
+            float speed = _inputV * _moveSpeed * Time.deltaTime;
+            Move(speed);
+        }
+
+        public void OnBoundsReached() => BoundsManager.Inst.TryTeleport(gameObject);
+
         private void UpdateFire()
         {
             if (_inputV != 0f)
@@ -74,13 +82,7 @@ namespace Scripts.Components
                 _fire.Stop();
             }
         }
-
-        void FixedUpdate()
-        {
-            float speed = _inputV * _moveSpeed * Time.deltaTime;
-            Move(speed);
-        }
-
+        
         private void Rotate(float deltaAngle, float passiveRotation, float velMod = 1f)
         {
             float speedFactor = _rotationCurve.Evaluate(_rotationTime);
@@ -104,5 +106,6 @@ namespace Scripts.Components
 
             _rb.AddForce(targetVel + (-vel * angleFactor), ForceMode.Acceleration);
         }
+
     }
 }

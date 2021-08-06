@@ -15,6 +15,7 @@ public class ObjectPooler : Singleton<ObjectPooler>
         base.Awake();
 
         _objects = new Dictionary<GameObject, Stack<GameObject>>();
+
         foreach (ObjectPool pool in _pools)
         {
             var objects = new Stack<GameObject>();
@@ -47,7 +48,7 @@ public class ObjectPooler : Singleton<ObjectPooler>
 
     public void Return(GameObject obj)
     {
-        var prefab = PrefabUtility.GetCorrespondingObjectFromOriginalSource(obj);
+        var prefab = PrefabUtility.GetPrefabInstanceHandle(obj) as GameObject;
 
         if (prefab == null)
         {

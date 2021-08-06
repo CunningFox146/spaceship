@@ -25,6 +25,8 @@ namespace Scripts.Components
             //Launch(Vector3.right, 2f);
         }
 
+        public void OnBoundsReached() => BoundsManager.Inst.TryTeleport(gameObject);
+
         public void OnHit(Collider other)
         {
             Instantiate(_explosion).transform.position = transform.position;
