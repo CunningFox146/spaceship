@@ -21,7 +21,7 @@ namespace Scripts.Components
         
 
         private List<GameObject> _asteriods;
-        private int _wave = 0;
+        private int _wave = 3;
 
         private float AsteroidSpeed
         {
