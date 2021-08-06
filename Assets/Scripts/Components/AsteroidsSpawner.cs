@@ -93,6 +93,7 @@ namespace Scripts.Components
             Debug.Log($"ReleaseWave: {_wave}");
             if (_waves.Length - 1 < _wave)
             {
+                ScoreManager.Inst.SetGameEnd(true);
                 return;
             }
             

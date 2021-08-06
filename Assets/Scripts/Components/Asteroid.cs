@@ -78,6 +78,8 @@ namespace Scripts.Components
             BoundsManager.Inst.StopTracking(gameObject);
             ObjectPooler.Inst.Return(_isShard ? PoolItem.MeteorShard : PoolItem.Meteor, gameObject);
 
+            ScoreManager.Inst.DoDelta(_isShard ? 500 : 1000);
+
             if (!_isShard)
             {
                 float range = 0.5f;
