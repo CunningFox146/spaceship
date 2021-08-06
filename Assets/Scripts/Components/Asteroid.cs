@@ -11,6 +11,7 @@ namespace Scripts.Components
         [SerializeField] private GameObject _collider;
 
         private Rigidbody _rb;
+        private Coroutine _layerCoroutine;
 
         public float BoundsOffset => transform.localScale.x;
 
@@ -21,8 +22,6 @@ namespace Scripts.Components
 
         void Start()
         {
-            BoundsManager.Inst.Track(gameObject);
-
             //Launch(Vector3.right, 2f);
         }
 
@@ -35,8 +34,46 @@ namespace Scripts.Components
         {
             transform.LookAt(Vector3.zero);
             _rb.velocity = transform.forward * speed;
+
+            var targetLayer = LayerMask.NameToLayer("Default");
+            gameObject.layer = targetLayer;
+            foreach (Transform child in transform)
+            {
+                child.gameObject.layer = targetLayer;
+            }
+            
+            StartCoroutine(UpdateLayer());
+
             //var perpendicular = -Vector2.Perpendicular(new Vector2(direction.x, direction.z)); // To set rotation to desired location we need an inverted perpendicular
             //_rb.angularVelocity = new Vector3(perpendicular.x, 0, perpendicular.y) * (speed * 0.75f);
+        }
+
+        private IEnumerator UpdateLayer()
+        {
+            var pos = transform.position;
+            var bounds = BoundsManager.Inst;
+
+            while (bounds.ShouldTeleport(gameObject, BoundsOffset))
+            {
+                yield return null;
+            }
+
+            yield return new WaitForSeconds(1f);
+
+            var targetLayer = LayerMask.NameToLayer("Bounds");
+            gameObject.layer = targetLayer;
+            foreach (Transform child in transform)
+            {
+                child.gameObject.layer = targetLayer;
+            }
+            
+            BoundsManager.Inst.Track(gameObject);
+
+            if (_layerCoroutine != null)
+            {
+                StopCoroutine(_layerCoroutine);
+                _layerCoroutine = null;
+            }
         }
     }
 }

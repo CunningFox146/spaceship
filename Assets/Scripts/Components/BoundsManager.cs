@@ -59,7 +59,7 @@ namespace Scripts.Components
 
         public void StopTracking(GameObject obj) => _inBoundsList.Remove(obj);
         public bool IsInBounds(GameObject obj) => _inBoundsList.ContainsKey(obj);
-        
+        public bool ShouldTeleport(GameObject obj, float offset) => CalculateNewPos(obj.transform.position, offset) != obj.transform.position;
 
         private Vector3 CalculateNewPos(Vector3 pos, float offset)
         {
