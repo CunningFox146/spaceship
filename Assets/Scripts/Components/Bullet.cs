@@ -31,7 +31,7 @@ namespace Scripts.Components
             BoundsManager.Inst.Track(gameObject);
             _rb.velocity = _speed * launcher.transform.forward;
 
-            transform.rotation = Quaternion.Euler(launcher.transform.forward);
+            transform.rotation = launcher.transform.rotation;
         }
 
         public void OnHit()
