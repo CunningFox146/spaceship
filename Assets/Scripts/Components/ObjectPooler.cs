@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Scripts;
+using UnityEditor;
 using UnityEngine;
 
 public class ObjectPooler : Singleton<ObjectPooler>
@@ -33,7 +34,7 @@ public class ObjectPooler : Singleton<ObjectPooler>
     {
         if (_objects.Count == 0)
         {
-            Debug.LogError($"Pool is empty! Object: {prefab}");
+            Debug.LogWarning($"Pool is empty! Object: {prefab}");
             return Instantiate(prefab);
         }
 
@@ -44,8 +45,17 @@ public class ObjectPooler : Singleton<ObjectPooler>
         return obj;
     }
 
-    public void Return(GameObject prefab, GameObject obj)
+    public void Return(GameObject obj)
     {
+        var prefab = PrefabUtility.GetCorrespondingObjectFromOriginalSource(obj);
+
+        if (prefab == null)
+        {
+            Debug.LogWarning($"Failed to get prefab for game object {obj}");
+            Destroy(obj);
+            return;
+        }
+
         obj.SetActive(false);
         obj.transform.parent = transform;
         _objects[prefab].Push(obj);

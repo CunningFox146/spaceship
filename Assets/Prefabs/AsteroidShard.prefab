@@ -62,6 +62,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _isShard: 1
+  _explosion: {fileID: 0}
   _collider: {fileID: 7488385678545981395}
 --- !u!64 &3596674271373394950
 MeshCollider:

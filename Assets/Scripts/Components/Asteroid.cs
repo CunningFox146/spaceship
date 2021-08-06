@@ -7,6 +7,7 @@ namespace Scripts.Components
     public class Asteroid : MonoBehaviour, IBoundsTrackable
     {
         [SerializeField] private bool _isShard;
+        [SerializeField] private GameObject _explosion;
         [SerializeField] private GameObject _collider;
 
         private Rigidbody _rb;
@@ -23,6 +24,11 @@ namespace Scripts.Components
             BoundsManager.Inst.Track(gameObject);
 
             //Launch(Vector3.right, 2f);
+        }
+
+        public void OnHit(Collision other)
+        {
+            Instantiate(_explosion).transform.position = other.contacts[0].point;
         }
         
         public void Launch(float speed)

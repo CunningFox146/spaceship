@@ -35,7 +35,7 @@ namespace Scripts.Components
 
             if (teleportPos != pos)
             {
-                Debug.Log($"Teleported: {obj} to {pos}");
+                //Debug.Log($"Teleported: {obj} to {pos}");
                 obj.transform.position = teleportPos;
             }
         }

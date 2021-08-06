@@ -15,7 +15,6 @@ namespace Scripts.Components
         [SerializeField] private GameObject _asteroidShard;
         [SerializeField] private float _directionAngle;
         [SerializeField] private Vector2 _speed;
-        [SerializeField] private float _spawnOffset = 1f;
 
         private float AsteroidSpeed
         {

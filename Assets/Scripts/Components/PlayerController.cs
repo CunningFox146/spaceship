@@ -12,9 +12,10 @@ namespace Scripts.Components
         [SerializeField] private float _rotationSpeed = 180f;
         [SerializeField] private float _maxAngleFactor = 30f;
         [SerializeField] private ParticleSystem _fire;
-        [SerializeField] private GameObject _collider;
+        [SerializeField] private Collider _collider;
 
         private Rigidbody _rb;
+        private PlayerGun _gun;
         private float _rotationTime;
         private float _inputV;
         private float _inputH;
@@ -24,6 +25,7 @@ namespace Scripts.Components
         void Awake()
         {
             _rb = GetComponent<Rigidbody>();
+            _gun = GetComponent<PlayerGun>();
         }
 
         void Start()
@@ -49,6 +51,11 @@ namespace Scripts.Components
 
             Rotate(angle, _passiveRotation * Time.deltaTime);
             UpdateFire();
+
+            if (Input.GetKey(KeyCode.Space))
+            {
+                _gun.Fire(_collider);
+            }
         }
 
         private void UpdateFire()

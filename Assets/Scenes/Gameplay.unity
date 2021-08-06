@@ -157,6 +157,8 @@ MonoBehaviour:
     count: 10
   - prefab: {fileID: 4647980962700241004, guid: 1f864f29d68061144a7bf23b505881be, type: 3}
     count: 50
+  - prefab: {fileID: 1949764175230554736, guid: 9128891cf8b56d04d9e8ddd28c1d8bc7, type: 3}
+    count: 100
 --- !u!4 &168182149
 Transform:
   m_ObjectHideFlags: 0
@@ -538,7 +540,6 @@ MonoBehaviour:
   _asteroidShard: {fileID: 4647980962700241004, guid: 1f864f29d68061144a7bf23b505881be, type: 3}
   _directionAngle: 0
   _speed: {x: 5, y: 2}
-  _spawnOffset: 1
 --- !u!4 &1662073187
 Transform:
   m_ObjectHideFlags: 0
@@ -607,22 +608,6 @@ PrefabInstance:
     - target: {fileID: 5165225956163029153, guid: c62ccbbbe9a87624c8042d73b3a81b96, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8069022865185390729, guid: c62ccbbbe9a87624c8042d73b3a81b96, type: 3}
-      propertyPath: _rightTopPoint.x
-      value: 9.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 8069022865185390729, guid: c62ccbbbe9a87624c8042d73b3a81b96, type: 3}
-      propertyPath: _rightTopPoint.z
-      value: 5.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 8069022865185390729, guid: c62ccbbbe9a87624c8042d73b3a81b96, type: 3}
-      propertyPath: _leftBottomPoint.x
-      value: -9.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 8069022865185390729, guid: c62ccbbbe9a87624c8042d73b3a81b96, type: 3}
-      propertyPath: _leftBottomPoint.z
-      value: -5.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c62ccbbbe9a87624c8042d73b3a81b96, type: 3}
