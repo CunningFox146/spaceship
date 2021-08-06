@@ -18,15 +18,16 @@ namespace Scripts.Components
         [SerializeField] private float _directionAngle;
         [SerializeField] private Vector2 _speed;
         [SerializeField] private float _spawnOffset = 2f;
+        
+
+        private List<GameObject> _asteriods;
+        private int _wave = 0;
 
         private float AsteroidSpeed
         {
             get => RandomUtil.WithVariance(_speed.x, _speed.y);
             set { }
         }
-
-        private List<GameObject> _asteriods;
-        private int _wave = 0;
 
         void Awake()
         {
@@ -38,6 +39,7 @@ namespace Scripts.Components
 #if !DEBUG_POSITIONS
             ReleaseWave();
 #endif
+
         }
 
 #if DEBUG_POSITIONS
@@ -58,6 +60,20 @@ namespace Scripts.Components
         }
 #endif
 
+        void FixedUpdate()
+        {
+            var objects = GameObject.FindGameObjectsWithTag("Asteroid");
+            foreach (GameObject obj in objects)
+            {
+                if (obj.activeSelf)
+                {
+                    return;
+                };
+            }
+
+            ReleaseWave();
+        }
+
         private GameObject CreateAsteroid(PoolItem type)
         {
             var asteroid = ObjectPooler.Inst.Get(type);
@@ -74,11 +90,11 @@ namespace Scripts.Components
 
         private void ReleaseWave()
         {
+            Debug.Log($"ReleaseWave: {_wave}");
             if (_waves.Length - 1 < _wave)
             {
                 return;
             }
-
             
             var data = _waves[_wave];
 
@@ -87,7 +103,7 @@ namespace Scripts.Components
                 CreateAsteroid(PoolItem.Meteor);
             }
 
-            for (int i = 0; i < data.asteroidsCount; i++)
+            for (int i = 0; i < data.smallAsteroidsCount; i++)
             {
                 CreateAsteroid(PoolItem.MeteorShard);
             }

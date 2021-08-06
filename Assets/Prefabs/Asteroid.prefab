@@ -28,7 +28,7 @@ GameObject:
   - component: {fileID: 5439016709675942142}
   m_Layer: 8
   m_Name: Asteroid
-  m_TagString: Untagged
+  m_TagString: Asteroid
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -76,6 +76,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5da9ce35697ec247b2803a633143fea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _shardCount: 3
   _isShard: 0
   _explosion: {fileID: 4198486382001218002, guid: a555f93bf917976409b63dbd2ef15006, type: 3}
   _shard: {fileID: 4647980962700241004, guid: 1f864f29d68061144a7bf23b505881be, type: 3}

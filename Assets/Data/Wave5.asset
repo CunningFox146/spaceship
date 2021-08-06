@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5538239e21a4dbd4d82e0c0ca616b56c, type: 3}
   m_Name: Wave5
   m_EditorClassIdentifier: 
-  asteroidsCount: 10
-  smallAsteroidsCount: 0
+  asteroidsCount: 5
+  smallAsteroidsCount: 1
