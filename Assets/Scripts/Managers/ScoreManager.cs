@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Scripts.Components
+namespace Asteroids.Managers
 {
     public class ScoreManager : Singleton<ScoreManager>
     {

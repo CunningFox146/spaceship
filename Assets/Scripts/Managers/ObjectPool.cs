@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
-namespace Scripts
+namespace Asteroids
 {
     [Serializable]
     public enum PoolItem

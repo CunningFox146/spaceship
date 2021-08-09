@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using Asteroids.Managers;
 using UnityEngine;
 
-namespace Scripts.Components
+namespace Asteroids.Player
 {
     public class Bullet : MonoBehaviour, IBoundsTrackable
     {

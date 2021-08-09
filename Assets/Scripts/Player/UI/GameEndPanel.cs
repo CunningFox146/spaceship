@@ -1,9 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Net.Mime;
+using Asteroids.Managers;
 using UnityEngine;
 
-namespace Scripts.Components
+namespace Asteroids.Player.UI
 {
     public class GameEndPanel : MonoBehaviour
     {

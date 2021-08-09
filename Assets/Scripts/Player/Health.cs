@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace Scripts.Components
+namespace Asteroids.Player
 {
     public class Health : MonoBehaviour
     {

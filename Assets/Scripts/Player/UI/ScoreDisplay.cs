@@ -1,7 +1,8 @@
+using Asteroids.Managers;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Scripts.Components
+namespace Asteroids.Player.UI
 {
     public class ScoreDisplay : MonoBehaviour
     {

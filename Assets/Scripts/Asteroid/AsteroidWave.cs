@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Scripts.ScriptableObjects
+namespace Asteroids.Asteroid
 {
     [CreateAssetMenu(fileName = "AsteroidWave", menuName = "ScriptableObjects/AsteroidWave", order = 1)]
     public class AsteroidWave : ScriptableObject

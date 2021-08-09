@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-namespace Scripts.Components
+namespace Asteroids.Managers
 {
     public class BoundsManager : Singleton<BoundsManager>
     {

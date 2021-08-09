@@ -1,8 +1,9 @@
 ﻿using System;
+using Asteroids.Asteroid;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Scripts.Components
+namespace Asteroids.Player.UI
 {
     public class PlayerHud : Singleton<PlayerHud>
     {

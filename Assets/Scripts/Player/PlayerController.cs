@@ -1,10 +1,11 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Asteroids.Managers;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-namespace Scripts.Components
+namespace Asteroids.Player
 {
     public class PlayerController : MonoBehaviour, IBoundsTrackable
     {

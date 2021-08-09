@@ -3,12 +3,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Scripts.ScriptableObjects;
-using Scripts.Util;
+using Asteroids.Managers;
+using Asteroids.Util;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-namespace Scripts.Components
+namespace Asteroids.Asteroid
 {
     public class AsteroidsSpawner : Singleton<AsteroidsSpawner>
     {

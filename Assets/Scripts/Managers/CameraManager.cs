@@ -2,7 +2,7 @@
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-namespace Scripts.Components
+namespace Asteroids.Managers
 {
     class CameraManager : Singleton<CameraManager>
     {

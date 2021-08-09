@@ -1,9 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
-using Scripts.Util;
+using Asteroids.Managers;
+using Asteroids.Player;
+using Asteroids.Util;
 using UnityEngine;
 
-namespace Scripts.Components
+namespace Asteroids.Asteroid
 {
     public class Asteroid : MonoBehaviour, IBoundsTrackable
     {

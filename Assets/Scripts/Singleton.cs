@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Scripts
+namespace Asteroids
 {
     public class Singleton<T> : MonoBehaviour where T : Component
     {

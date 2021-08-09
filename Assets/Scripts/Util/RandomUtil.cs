@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Scripts.Util
+namespace Asteroids.Util
 {
     public static class RandomUtil
     {

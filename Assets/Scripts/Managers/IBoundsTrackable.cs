@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Scripts
+namespace Asteroids
 {
     public interface IBoundsTrackable
     {
