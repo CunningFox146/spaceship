@@ -4,7 +4,7 @@ using Random = UnityEngine.Random;
 
 namespace Scripts.Components
 {
-    class CameraShake : MonoBehaviour
+    class CameraManager : Singleton<CameraManager>
     {
         private Vector3 _startPos;
         private float _shakeDuration;

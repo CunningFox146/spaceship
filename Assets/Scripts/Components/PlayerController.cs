@@ -15,15 +15,11 @@ namespace Scripts.Components
         [SerializeField] private Collider _collider;
         [SerializeField] private GameObject _model;
         [SerializeField] private GameObject _playerExplosion;
-
-        [SerializeField] private HitOverlay _hitOverlay;
-        [SerializeField] private HealthDisplay _healthDisplay;
-
-        private CameraShake _cameraShake;
+        
         private Rigidbody _rb;
         private PlayerGun _gun;
         private Health _health;
-        private Coroutine _damageBlink; // Also used to check if we're invincible
+        private Coroutine _blinkCoroutine; // Also used to check if we're invincible
         private float _rotationTime;
         private float _inputV;
         private float _inputH;
@@ -32,7 +28,6 @@ namespace Scripts.Components
 
         void Awake()
         {
-            _cameraShake = Camera.main.GetComponent<CameraShake>();
             _rb = GetComponent<Rigidbody>();
             _gun = GetComponent<PlayerGun>();
             _health = GetComponent<Health>();
@@ -41,8 +36,6 @@ namespace Scripts.Components
         void Start()
         {
             BoundsManager.Inst.Track(gameObject);
-
-            _healthDisplay.Init(_health.maxHealth);
 
             _health.OnHealthChanged += OnHealthChangedHandler;
             _health.OnDeath += OnDeathHandler;
@@ -83,10 +76,10 @@ namespace Scripts.Components
 
         private void OnDeathHandler()
         {
-            if (_damageBlink != null)
+            if (_blinkCoroutine != null)
             {
-                StopCoroutine(_damageBlink);
-                _damageBlink = null;
+                StopCoroutine(_blinkCoroutine);
+                _blinkCoroutine = null;
             }
             
             float forceMin = 50f;
@@ -96,39 +89,34 @@ namespace Scripts.Components
 
             _fire.Play();
 
-            _cameraShake.Shake(1f, .075f);
+            CameraManager.Inst.Shake(1f, .075f);
             Invoke("Explode", 1f);
             
-            _hitOverlay.OnHit();
-            _healthDisplay.SetHealth(0);
 
             enabled = false;
         }
 
         private void OnHealthChangedHandler(int newHealth)
         {
-            if (_damageBlink != null)
+            if (_blinkCoroutine != null)
             {
-                StopCoroutine(_damageBlink);
-                _damageBlink = null;
+                StopCoroutine(_blinkCoroutine);
+                _blinkCoroutine = null;
             }
 
-            _damageBlink = StartCoroutine(DamageBlink(1f));
-            _cameraShake.Shake(.5f, .1f);
-
-            _hitOverlay.OnHit();
-            _healthDisplay.SetHealth(newHealth);
+            _blinkCoroutine = StartCoroutine(DamageBlinkCoroutine(1f));
+            CameraManager.Inst.Shake(.5f, .1f);
         }
 
         private void Explode()
         {
-            _cameraShake.Shake(1f, .1f);
+            CameraManager.Inst.Shake(1f, .1f);
             BoundsManager.Inst.StopTracking(gameObject);
             Instantiate(_playerExplosion).transform.position = transform.position;
             Destroy(gameObject);
         }
 
-        private IEnumerator DamageBlink(float duration)
+        private IEnumerator DamageBlinkCoroutine(float duration)
         {
             float period = 0.1f;
 
@@ -139,7 +127,7 @@ namespace Scripts.Components
             }
 
             _model.SetActive(true);
-            _damageBlink = null;
+            _blinkCoroutine = null;
         }
 
         private void UpdateFire()
@@ -159,7 +147,7 @@ namespace Scripts.Components
             }
         }
         
-        private void Rotate(float deltaAngle, float passiveRotation, float velMod = 1f)
+        private void Rotate(float deltaAngle, float passiveRotation)
         {
             float speedFactor = _rotationCurve.Evaluate(_rotationTime);
             Quaternion rotation = Quaternion.AngleAxis(deltaAngle * speedFactor, Vector3.up);
@@ -185,7 +173,7 @@ namespace Scripts.Components
 
         private void OnCollisionEnter(Collision collision)
         {
-            if (_damageBlink == null)
+            if (_blinkCoroutine == null)
             {
                 _health.DoDelta(-1);
             }

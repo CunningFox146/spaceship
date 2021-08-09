@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 720297179306618094}
   - component: {fileID: 3517203947602110021}
   - component: {fileID: 6128301809785314892}
+  - component: {fileID: 4974672067242578503}
   m_Layer: 8
   m_Name: Player
   m_TagString: Untagged
@@ -79,7 +80,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27e9adffac24a834d967651cc6940a3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxHealth: 3
+  maxHealth: 3
 --- !u!114 &6128301809785314892
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -142,6 +143,20 @@ MonoBehaviour:
   _collider: {fileID: 7852647011348758497}
   _model: {fileID: 6088937866718726302}
   _playerExplosion: {fileID: 4198486382001218002, guid: 63b5f715ebd9aa2418a416d9b936df50, type: 3}
+--- !u!114 &4974672067242578503
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 968601462265147206}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ecbf8bd3b33e4342b29ee693add3a7b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _hitOverlay: {fileID: 0}
+  _healthDisplay: {fileID: 0}
 --- !u!1 &1985436242078300667
 GameObject:
   m_ObjectHideFlags: 0

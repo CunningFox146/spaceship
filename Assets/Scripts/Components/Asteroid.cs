@@ -21,11 +21,6 @@ namespace Scripts.Components
             _rb = GetComponent<Rigidbody>();
         }
 
-        void Start()
-        {
-            //Launch(Vector3.right, 2f);
-        }
-
         public void OnBoundsReached() => BoundsManager.Inst.TryTeleport(gameObject);
         
         public void Launch(float speed)
@@ -39,13 +34,10 @@ namespace Scripts.Components
                 child.gameObject.layer = targetLayer;
             }
             
-            StartCoroutine(UpdateLayer());
-
-            //var perpendicular = -Vector2.Perpendicular(new Vector2(direction.x, direction.z)); // To set rotation to desired location we need an inverted perpendicular
-            //_rb.angularVelocity = new Vector3(perpendicular.x, 0, perpendicular.y) * (speed * 0.75f);
+            StartCoroutine(UpdateLayerCoroutine());
         }
 
-        private IEnumerator UpdateLayer()
+        private IEnumerator UpdateLayerCoroutine()
         {
             var pos = transform.position;
             var bounds = BoundsManager.Inst;
@@ -97,6 +89,16 @@ namespace Scripts.Components
 
             var fx = Instantiate(_explosion);
             fx.transform.position = collision.contacts[0].point;
+        }
+
+        void OnCollisionEnter(Collision collision)
+        {
+            var bullet = collision.transform.root.GetComponent<Bullet>();
+            if (bullet)
+            {
+                bullet.OnHit();
+                OnAttacked(collision);
+            }
         }
     }
 }

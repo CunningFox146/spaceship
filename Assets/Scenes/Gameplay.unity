@@ -6136,6 +6136,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 4974672067242578503, guid: c62ccbbbe9a87624c8042d73b3a81b96, type: 3}
+      propertyPath: _hitOverlay
+      value: 
+      objectReference: {fileID: 911757964}
+    - target: {fileID: 4974672067242578503, guid: c62ccbbbe9a87624c8042d73b3a81b96, type: 3}
+      propertyPath: _healthDisplay
+      value: 
+      objectReference: {fileID: 1445130464}
     - target: {fileID: 5165225956163029153, guid: c62ccbbbe9a87624c8042d73b3a81b96, type: 3}
       propertyPath: m_RootOrder
       value: 1
