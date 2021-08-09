@@ -14,7 +14,6 @@ namespace Scripts.Components
             var near = Physics.OverlapSphere(transform.position, _radius);
             foreach (Collider coll in near)
             {
-                Debug.Log($"coll: {coll.gameObject.name}");
                 var rb = coll.transform.root.GetComponent<Rigidbody>();
                 if (rb != null)
                 {
