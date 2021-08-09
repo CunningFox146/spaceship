@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 5165225956163029153}
   - component: {fileID: 7453387739556548494}
   - component: {fileID: 720297179306618094}
+  - component: {fileID: 3517203947602110021}
   - component: {fileID: 6128301809785314892}
   m_Layer: 8
   m_Name: Player
@@ -66,6 +67,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _bullet: {fileID: 1949764175230554736, guid: 9128891cf8b56d04d9e8ddd28c1d8bc7, type: 3}
   _fireRate: 0.5
+--- !u!114 &3517203947602110021
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 968601462265147206}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 27e9adffac24a834d967651cc6940a3b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _maxHealth: 3
 --- !u!114 &6128301809785314892
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -126,6 +140,8 @@ MonoBehaviour:
   _maxAngleFactor: 30
   _fire: {fileID: 2765651273219553464}
   _collider: {fileID: 7852647011348758497}
+  _model: {fileID: 6088937866718726302}
+  _playerExplosion: {fileID: 4198486382001218002, guid: 63b5f715ebd9aa2418a416d9b936df50, type: 3}
 --- !u!1 &1985436242078300667
 GameObject:
   m_ObjectHideFlags: 0
@@ -5077,6 +5093,11 @@ PrefabInstance:
     m_RemovedComponents:
     - {fileID: 9144030251778499809, guid: b3c0a61dfe701344d819eb701e83f4b7, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: b3c0a61dfe701344d819eb701e83f4b7, type: 3}
+--- !u!1 &6088937866718726302 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3368916564331560363, guid: b3c0a61dfe701344d819eb701e83f4b7, type: 3}
+  m_PrefabInstance: {fileID: 8809194247570371893}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &6902769278970335780 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2705286137011316497, guid: b3c0a61dfe701344d819eb701e83f4b7, type: 3}

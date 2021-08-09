@@ -13,9 +13,17 @@ namespace Scripts.Components
         [SerializeField] private float _maxAngleFactor = 30f;
         [SerializeField] private ParticleSystem _fire;
         [SerializeField] private Collider _collider;
+        [SerializeField] private GameObject _model;
+        [SerializeField] private GameObject _playerExplosion;
 
+        [SerializeField] private HitOverlay _hitOverlay;
+        [SerializeField] private HealthDisplay _healthDisplay;
+
+        private CameraShake _cameraShake;
         private Rigidbody _rb;
         private PlayerGun _gun;
+        private Health _health;
+        private Coroutine _damageBlink; // Also used to check if we're invincible
         private float _rotationTime;
         private float _inputV;
         private float _inputH;
@@ -24,13 +32,20 @@ namespace Scripts.Components
 
         void Awake()
         {
+            _cameraShake = Camera.main.GetComponent<CameraShake>();
             _rb = GetComponent<Rigidbody>();
             _gun = GetComponent<PlayerGun>();
+            _health = GetComponent<Health>();
         }
 
         void Start()
         {
             BoundsManager.Inst.Track(gameObject);
+
+            _healthDisplay.Init(_health.maxHealth);
+
+            _health.OnHealthChanged += OnHealthChangedHandler;
+            _health.OnDeath += OnDeathHandler;
         }
 
         void Update()
@@ -65,6 +80,67 @@ namespace Scripts.Components
         }
 
         public void OnBoundsReached() => BoundsManager.Inst.TryTeleport(gameObject);
+
+        private void OnDeathHandler()
+        {
+            if (_damageBlink != null)
+            {
+                StopCoroutine(_damageBlink);
+                _damageBlink = null;
+            }
+            
+            float forceMin = 50f;
+            float forceMax = 60f;
+            _rb.constraints = RigidbodyConstraints.None;
+            _rb.angularVelocity = new Vector3(Random.Range(forceMin, forceMax), Random.Range(forceMin, forceMax), Random.Range(forceMin, forceMax));
+
+            _fire.Play();
+
+            _cameraShake.Shake(1f, .075f);
+            Invoke("Explode", 1f);
+            
+            _hitOverlay.OnHit();
+            _healthDisplay.SetHealth(0);
+
+            enabled = false;
+        }
+
+        private void OnHealthChangedHandler(int newHealth)
+        {
+            if (_damageBlink != null)
+            {
+                StopCoroutine(_damageBlink);
+                _damageBlink = null;
+            }
+
+            _damageBlink = StartCoroutine(DamageBlink(1f));
+            _cameraShake.Shake(.5f, .1f);
+
+            _hitOverlay.OnHit();
+            _healthDisplay.SetHealth(newHealth);
+        }
+
+        private void Explode()
+        {
+            _cameraShake.Shake(1f, .1f);
+            BoundsManager.Inst.StopTracking(gameObject);
+            Instantiate(_playerExplosion).transform.position = transform.position;
+            Destroy(gameObject);
+        }
+
+        private IEnumerator DamageBlink(float duration)
+        {
+            float period = 0.1f;
+
+            for (int i = 0; i < duration/ period; i++)
+            {
+                _model.SetActive(!_model.activeSelf);
+                yield return new WaitForSeconds(period);
+            }
+
+            _model.SetActive(true);
+            _damageBlink = null;
+        }
 
         private void UpdateFire()
         {
@@ -107,5 +183,12 @@ namespace Scripts.Components
             _rb.AddForce(targetVel + (-vel * angleFactor), ForceMode.Acceleration);
         }
 
+        private void OnCollisionEnter(Collision collision)
+        {
+            if (_damageBlink == null)
+            {
+                _health.DoDelta(-1);
+            }
+        }
     }
 }

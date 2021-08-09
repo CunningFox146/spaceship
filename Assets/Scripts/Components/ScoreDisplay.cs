@@ -6,6 +6,9 @@ namespace Scripts.Components
     public class ScoreDisplay : MonoBehaviour
     {
         private Text _text;
+        private int _score = 0;
+        private int _targetScore = 0;
+        private LTDescr _tween;
 
         void Start()
         {
@@ -13,10 +16,27 @@ namespace Scripts.Components
 
             ScoreManager.Inst.OnScoreChanged += ScoreChangedHandler;
         }
-
+        
         private void ScoreChangedHandler(int score)
         {
-            _text.text = score.ToString();
+            _targetScore = score;
+
+            if (_targetScore == _score) return;
+
+            if (_tween != null)
+            {
+                LeanTween.cancel(_tween.id);
+            }
+
+            _tween = LeanTween.value(_score, _targetScore, 0.5f)
+                .setOnUpdate(UpdateScore)
+                .setOnComplete(() => _tween = null);
+        }
+
+        private void UpdateScore(float val)
+        {
+            _score = (int)val;
+            _text.text = _score.ToString("D6");
         }
     }
 }

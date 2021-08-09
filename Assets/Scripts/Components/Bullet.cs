@@ -8,7 +8,6 @@ namespace Scripts.Components
     {
         [SerializeField] private float _speed = 1f;
         [SerializeField] private Collider _collider;
-        [SerializeField] private float _duration = 3f;
 
         private Rigidbody _rb;
 
