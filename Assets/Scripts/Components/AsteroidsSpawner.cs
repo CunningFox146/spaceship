@@ -10,8 +10,10 @@ using Random = UnityEngine.Random;
 
 namespace Scripts.Components
 {
-    public class AsteroidsSpawner : MonoBehaviour
+    public class AsteroidsSpawner : Singleton<AsteroidsSpawner>
     {
+        public event Action<int> OnWaveChanged;
+
         [SerializeField] private AsteroidWave[] _waves;
         [SerializeField] private GameObject _asteroid;
         [SerializeField] private GameObject _asteroidShard;
@@ -19,9 +21,10 @@ namespace Scripts.Components
         [SerializeField] private Vector2 _speed;
         [SerializeField] private float _spawnOffset = 2f;
         
-
         private List<GameObject> _asteriods;
-        private int _wave = 3;
+
+        public int Wave { get; private set; }
+        public int WavesCount => _waves.Length;
 
         private float AsteroidSpeed
         {
@@ -29,8 +32,10 @@ namespace Scripts.Components
             set { }
         }
 
-        void Awake()
+        public override void Awake()
         {
+            base.Awake();
+
             _asteriods = new List<GameObject>();
         }
 
@@ -39,7 +44,6 @@ namespace Scripts.Components
 #if !DEBUG_POSITIONS
             ReleaseWave();
 #endif
-
         }
 
 #if DEBUG_POSITIONS
@@ -90,14 +94,16 @@ namespace Scripts.Components
 
         private void ReleaseWave()
         {
-            Debug.Log($"ReleaseWave: {_wave}");
-            if (_waves.Length - 1 < _wave)
+            Debug.Log($"ReleaseWave: {Wave}");
+            if (_waves.Length - 1 < Wave)
             {
                 ScoreManager.Inst.SetGameEnd(true);
                 return;
             }
-            
-            var data = _waves[_wave];
+
+            OnWaveChanged?.Invoke(Wave);
+
+            var data = _waves[Wave];
 
             for (int i = 0; i < data.asteroidsCount; i++)
             {
@@ -109,7 +115,7 @@ namespace Scripts.Components
                 CreateAsteroid(PoolItem.MeteorShard);
             }
 
-            _wave++;
+            Wave++;
         }
 
         private Vector3 GetSpawnPosition()

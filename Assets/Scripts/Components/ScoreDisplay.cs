@@ -16,7 +16,7 @@ namespace Scripts.Components
 
             ScoreManager.Inst.OnScoreChanged += ScoreChangedHandler;
         }
-        
+
         private void ScoreChangedHandler(int score)
         {
             _targetScore = score;

@@ -138,9 +138,9 @@ public class LeanAudio : object {
 		listLength += -2;
 		generatedWaveDistancesCount = listLength / 2;
 
-		/*float[] wave = new float[ listLength ];
-		for(int i = 0; i < wave.Length; i++){
-			wave[i] = longList[i];
+		/*float[] Wave = new float[ listLength ];
+		for(int i = 0; i < Wave.Length; i++){
+			Wave[i] = longList[i];
 		}*/
 		return listLength;
 	}
@@ -161,7 +161,7 @@ public class LeanAudio : object {
 				waveIter += 2;
 				subWaveDiff = longList[waveIter] - longList[waveIter-2];
 				waveHeight = longList[waveIter+1];
-				// Debug.Log("passed wave i:"+i);
+				// Debug.Log("passed Wave i:"+i);
 			}
 			subWaveTime = passedTime - subWaveTimeLast;
 			float ratioElapsed = subWaveTime / subWaveDiff;
@@ -357,10 +357,10 @@ public class LeanAudioOptions : object {
 	}
 
 	/**
-	* Set details about the shape of the curve by adding vibrato modulations through it (alters the peak values giving it a wah-wah effect). You can add as many as you want to sculpt out more detail in the sound wave.
+	* Set details about the shape of the curve by adding vibrato modulations through it (alters the peak values giving it a wah-wah effect). You can add as many as you want to sculpt out more detail in the sound Wave.
 	* 
 	* @method setVibrato
-	* @param {Vector3[]} vibratoArray:Vector3[] The first value is the period in seconds that you wish to have the vibrato wave fluctuate at. The second value is the minimum height you wish the vibrato wave to dip down to (default is zero). The third is reserved for future effects.
+	* @param {Vector3[]} vibratoArray:Vector3[] The first value is the period in seconds that you wish to have the vibrato Wave fluctuate at. The second value is the minimum height you wish the vibrato Wave to dip down to (default is zero). The third is reserved for future effects.
 	* @return {LeanAudioOptions} LeanAudioOptions describing optional values
 	* @example
 	* AnimationCurve volumeCurve = new AnimationCurve( new Keyframe(0f, 1f, 0f, -1f), new Keyframe(1f, 0f, -1f, 0f));<br>
