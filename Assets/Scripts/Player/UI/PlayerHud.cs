@@ -37,6 +37,7 @@ namespace Asteroids.Player.UI
             var startPos = _nextWave.rectTransform.anchoredPosition;
 
             _nextWave.gameObject.SetActive(true);
+            _nextWave.text = wave > 0 ? "NEXT WAVE" : "START!";
 
             _nextWave.rectTransform.anchoredPosition = startPos + new Vector2(-offset, 0f);
             _nextWave.color = new Color(1f, 1f, 1f, 0);

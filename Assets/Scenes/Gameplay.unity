@@ -5812,7 +5812,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: a3eceed0e6b76ab46afa0bab5c7d3579, type: 3}
+    m_Font: {fileID: 12800000, guid: 45b046fa14eef39419afacaaae9f627c, type: 3}
     m_FontSize: 50
     m_FontStyle: 0
     m_BestFit: 0
@@ -5963,12 +5963,12 @@ GameObject:
   - component: {fileID: 1480455491}
   - component: {fileID: 1480455494}
   m_Layer: 5
-  m_Name: GameEnd
+  m_Name: Game
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1480455490
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5997,7 +5997,7 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1480455489}
   m_Enabled: 1
-  m_Alpha: 0
+  m_Alpha: 1
   m_Interactable: 0
   m_BlocksRaycasts: 0
   m_IgnoreParentGroups: 0
@@ -6014,7 +6014,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0.5019608}
+  m_Color: {r: 0, g: 0, b: 0, a: 0.7058824}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -6248,7 +6248,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5165225956163029153, guid: c62ccbbbe9a87624c8042d73b3a81b96, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -2.13
+      value: -2.5
       objectReference: {fileID: 0}
     - target: {fileID: 5165225956163029153, guid: c62ccbbbe9a87624c8042d73b3a81b96, type: 3}
       propertyPath: m_LocalRotation.w

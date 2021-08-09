@@ -23,6 +23,7 @@ namespace Asteroids.Player
         private PlayerGun _gun;
         private Health _health;
         private Coroutine _blinkCoroutine; // Also used to check if we're invincible
+        private bool isCutscene;
         private float _rotationTime;
         private float _inputV;
         private float _inputH;
@@ -40,12 +41,38 @@ namespace Asteroids.Player
             
             _health.OnHealthChanged += OnHealthChangedHandler;
             _health.OnDeath += OnDeathHandler;
+
+            StartCoroutine(CutsceneCoroutine());
+        }
+
+        private IEnumerator CutsceneCoroutine()
+        {
+            var originalLayer = _model.layer;
+            var targetLayer = LayerMask.NameToLayer("Default");
+            var startPos = _model.transform.localPosition;
+
+            isCutscene = true;
+            _model.layer = targetLayer;
+            _fire.gameObject.layer = targetLayer;
+            _model.transform.localPosition += Vector3.forward * -3.5f;
+            _fire.Play();
+            LeanTween.moveLocal(_model, startPos, 1f).setEaseOutCubic();
+
+            yield return new WaitForSeconds(1f);
+
+            isCutscene = false;
+            _model.layer = originalLayer;
+            _fire.gameObject.layer = originalLayer;
+            _fire.Stop();
         }
 
         void Update()
         {
-            _inputV = Input.GetAxis("Vertical");
-            _inputH = Input.GetAxis("Horizontal");
+            if (!isCutscene)
+            {
+                _inputV = Input.GetAxis("Vertical");
+                _inputH = Input.GetAxis("Horizontal");
+            }
             
             float angle = _inputH * _rotationSpeed * Time.deltaTime;
 
@@ -149,6 +176,7 @@ namespace Asteroids.Player
 
         private void UpdateFire()
         {
+            if (isCutscene) return;
             if (_inputV != 0f)
             {
                 if (!_fire.isPlaying)

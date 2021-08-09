@@ -24,7 +24,6 @@ namespace Asteroids.Asteroid
         private List<GameObject> _asteriods;
 
         public int Wave { get; private set; }
-        public int WavesCount => _waves.Length;
 
         private float AsteroidSpeed
         {
@@ -39,14 +38,12 @@ namespace Asteroids.Asteroid
             _asteriods = new List<GameObject>();
         }
 
+#if !DEBUG_POSITIONS
         void Start()
         {
-#if !DEBUG_POSITIONS
-            ReleaseWave();
-#endif
+            Invoke("ReleaseWave", 1.25f);
         }
-
-#if DEBUG_POSITIONS
+#else
         void Update()
         {
             var bounds = BoundsManager.Inst;
@@ -66,6 +63,8 @@ namespace Asteroids.Asteroid
 
         void FixedUpdate()
         {
+            if (Wave == 0) return;
+
             var objects = GameObject.FindGameObjectsWithTag("Asteroid");
             foreach (GameObject obj in objects)
             {

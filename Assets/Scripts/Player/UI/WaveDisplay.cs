@@ -25,7 +25,7 @@ namespace Asteroids.Player.UI
 
         private void OnWaveChangedHandler(int wave)
         {
-            _text.text = $"WAVE {wave + 1}/{AsteroidsSpawner.Inst.WavesCount}";
+            _text.text = $"WAVE {wave + 1}";
         }
     }
 }
