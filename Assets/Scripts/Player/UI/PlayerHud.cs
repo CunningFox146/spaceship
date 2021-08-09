@@ -7,6 +7,7 @@ namespace Asteroids.Player.UI
 {
     public class PlayerHud : Singleton<PlayerHud>
     {
+        [SerializeField] private GameEndPanel _gameEndPanel;
         [SerializeField] private HitOverlay _hitOverlay;
         [SerializeField] private HealthDisplay _healthDisplay;
         [SerializeField] private Text _nextWave;
@@ -23,7 +24,7 @@ namespace Asteroids.Player.UI
         void Start()
         {
             _healthDisplay.Init(_health.maxHealth);
-
+            
             AsteroidsSpawner.Inst.OnWaveChanged += OnWaveChangedHandler;
             _health.OnHealthChanged += OnHealthChangedHandler;
             _health.OnDeath += OnDeathHandler;
@@ -70,9 +71,16 @@ namespace Asteroids.Player.UI
 
         private void OnDeathHandler()
         {
+            Invoke("ShowGameEndPanel", 1.5f);
 
             _hitOverlay.OnHit();
             _healthDisplay.SetHealth(0);
+        }
+
+        private void ShowGameEndPanel()
+        {
+            _gameEndPanel.gameObject.SetActive(true);
+            _gameEndPanel.Init();
         }
 
         private void OnHealthChangedHandler(int newHealth)

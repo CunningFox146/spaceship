@@ -157,7 +157,9 @@ namespace Asteroids.Player
             CameraManager.Inst.Shake(1f, .1f);
             BoundsManager.Inst.Remove(gameObject);
             Instantiate(_playerExplosion).transform.position = transform.position;
-            Destroy(gameObject);
+            _collider.gameObject.SetActive(false);
+            _model.gameObject.SetActive(false);
+            enabled = false;
         }
 
         private IEnumerator DamageBlinkCoroutine(float duration)
