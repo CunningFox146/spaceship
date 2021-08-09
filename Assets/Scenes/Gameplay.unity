@@ -6543,9 +6543,17 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 720297179306618094, guid: c62ccbbbe9a87624c8042d73b3a81b96, type: 3}
+      propertyPath: _fireRate
+      value: 0.25
+      objectReference: {fileID: 0}
     - target: {fileID: 968601462265147206, guid: c62ccbbbe9a87624c8042d73b3a81b96, type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 3517203947602110021, guid: c62ccbbbe9a87624c8042d73b3a81b96, type: 3}
+      propertyPath: maxHealth
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 4974672067242578503, guid: c62ccbbbe9a87624c8042d73b3a81b96, type: 3}
       propertyPath: _nextWave
@@ -6606,6 +6614,10 @@ PrefabInstance:
     - target: {fileID: 5165225956163029153, guid: c62ccbbbe9a87624c8042d73b3a81b96, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6128301809785314892, guid: c62ccbbbe9a87624c8042d73b3a81b96, type: 3}
+      propertyPath: _moveSpeed
+      value: 200
       objectReference: {fileID: 0}
     - target: {fileID: 6128301809785314892, guid: c62ccbbbe9a87624c8042d73b3a81b96, type: 3}
       propertyPath: _hitOverlay

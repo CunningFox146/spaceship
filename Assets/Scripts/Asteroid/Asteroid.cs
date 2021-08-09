@@ -59,7 +59,8 @@ namespace Asteroids.Asteroid
 
         private IEnumerator UpdateLayerCoroutine()
         {
-            while (!BoundsManager.GetInBounds(transform.position, transform.localScale.x))
+            float start = Time.time; // If there's too many asteroids they SOMETIMES never reach the bounds
+            while (!BoundsManager.GetInBounds(transform.position, transform.localScale.x) && Time.time - start < 5f)
             {
                 yield return null;
             }

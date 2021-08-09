@@ -11,10 +11,8 @@ namespace Asteroids.Managers
         [SerializeField] private int _shardScore = 100;
 
         public event Action<int> OnScoreChanged;
-        public event Action<bool> OnGameEnd;
 
         public int Score { get; private set; }
-        public bool IsWin { get; private set; } = false;
         public bool IsGamePlay { get; private set; } = true;
 
         public void DoDelta(int delta)
@@ -23,12 +21,9 @@ namespace Asteroids.Managers
             OnScoreChanged?.Invoke(Score);
         }
 
-        public void SetGameEnd(bool win)
+        public void SetGameEnd()
         {
             IsGamePlay = false;
-            IsWin = win;
-
-            OnGameEnd?.Invoke(win);
         }
 
         public void TargetKilled(bool isShard)

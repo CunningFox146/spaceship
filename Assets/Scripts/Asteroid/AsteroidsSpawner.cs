@@ -94,25 +94,34 @@ namespace Asteroids.Asteroid
         private void ReleaseWave()
         {
             Debug.Log($"ReleaseWave: {Wave}");
-            if (_waves.Length - 1 < Wave)
-            {
-                ScoreManager.Inst.SetGameEnd(true);
-                return;
-            }
-
             OnWaveChanged?.Invoke(Wave);
 
-            var data = _waves[Wave];
-
-            for (int i = 0; i < data.asteroidsCount; i++)
+            void Release(int idx)
             {
-                CreateAsteroid(PoolItem.Meteor);
+                Debug.Log($"spawning wave #{idx}");
+                var data = _waves[idx];
+
+                for (int i = 0; i < data.asteroidsCount; i++)
+                {
+                    CreateAsteroid(PoolItem.Meteor);
+                }
+
+                for (int i = 0; i < data.smallAsteroidsCount; i++)
+                {
+                    CreateAsteroid(PoolItem.MeteorShard);
+                }
             }
 
-            for (int i = 0; i < data.smallAsteroidsCount; i++)
+            int currWave = Wave;
+            int count = _waves.Length - 1;
+            while (currWave > count)
             {
-                CreateAsteroid(PoolItem.MeteorShard);
+                currWave -= _waves.Length;
+                Release(count);
             }
+
+            Release(currWave);
+            
 
             Wave++;
         }
