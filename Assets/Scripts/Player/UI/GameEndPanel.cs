@@ -40,20 +40,34 @@ namespace Asteroids.Player.UI
 
         private void AnimateHighScore()
         {
+            int highScore = ScoreManager.Inst.highScore;
+
             _highScore.gameObject.SetActive(true);
             var text = _highScore.GetComponent<Text>();
-            LeanTween.value(0f, (float)5500, 2f)
-                .setDelay(1f)
-                .setOnUpdate((float val) => text.text = $"HIGH SCORE {((int)val):D6}")
-                .setOnComplete(DisplayHighScoreInfo);
+            if (highScore > 0)
+            {
+                LeanTween.value(0f, (float)highScore, 2f)
+                    .setDelay(1f)
+                    .setOnUpdate((float val) => text.text = $"HIGH SCORE {((int)val):D6}")
+                    .setOnComplete(DisplayHighScoreInfo);
+                return;
+            }
+
+            text.text = "NO HIGH SCORE";
+            DisplayHighScoreInfo();
         }
 
         private void DisplayHighScoreInfo()
         {
-            bool isHighScore = false;
+            float highScore = ScoreManager.Inst.highScore;
+            float score = ScoreManager.Inst.Score;
+            bool isHighScore = score >= highScore;
+
             _newHighScore.gameObject.SetActive(true);
             _newHighScore.GetComponent<Text>().text =
-                isHighScore ? "NEW HIGH SCORE!" : $"<color=red>{100000}</color> POINTS LEFT";
+                isHighScore
+                    ? "NEW HIGH SCORE!"
+                    : $"<color=red>{highScore - score}</color> POINTS LEFT";
 
             StartCoroutine(ShakeHighScore(0.5f));
             StartCoroutine(AnyKeyCoroutine());

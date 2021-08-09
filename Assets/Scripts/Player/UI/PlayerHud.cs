@@ -1,6 +1,7 @@
 ﻿using System;
 using Asteroids.Asteroid;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 namespace Asteroids.Player.UI
@@ -28,6 +29,15 @@ namespace Asteroids.Player.UI
             AsteroidsSpawner.Inst.OnWaveChanged += OnWaveChangedHandler;
             _health.OnHealthChanged += OnHealthChangedHandler;
             _health.OnDeath += OnDeathHandler;
+        }
+
+        // Not sure if it should go here or in player controller
+        void Update()
+        {
+            if (_gameEndPanel.IsDone && Input.anyKeyDown)
+            {
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            }
         }
 
         private void OnWaveChangedHandler(int wave)

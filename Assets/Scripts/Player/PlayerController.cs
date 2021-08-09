@@ -136,6 +136,8 @@ namespace Asteroids.Player
 
             CameraManager.Inst.Shake(1f, .075f);
             Invoke("Explode", 1f);
+
+            ScoreManager.Inst.Save();
             
             enabled = false;
         }
