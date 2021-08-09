@@ -20,38 +20,54 @@ namespace Scripts.Components
 
             RecalculateBounds();
         }
-
-        private void Update()
+        
+        private void Update() // TODO maybe it's better to use LateUpdate without LINQ?
         {
             foreach (GameObject obj in _inBoundsList.Keys.ToList()) // Maybe this is not that efficient, but modification-friendly
             {
-                if (ShouldTeleport(obj, _inBoundsList[obj].BoundsOffset))
-                {
-                    _inBoundsList[obj].OnBoundsReached();
-                }
+                _inBoundsList[obj].UpdateBounds();
             }
         }
 
-        public void TryTeleport(GameObject obj)
+        public static bool GetInBounds(Vector3 pos, float offset)
         {
-            var pos = obj.transform.position;
-            var teleportPos = CalculateNewPos(pos, _inBoundsList[obj].BoundsOffset);
+            var self = BoundsManager.Inst;
 
-            if (teleportPos != pos)
+            float boundsWidth = self.BoundsWidth;
+            float boundsHeight = self.BoundsHeight;
+
+            return !(pos.x < (-boundsWidth - offset * 0.5f) || (pos.x > (boundsWidth + offset * 0.5f)) ||
+                     pos.z < (-boundsHeight - offset * 0.5f) || pos.z > (boundsHeight + offset * 0.5f));
+        }
+
+        public static Vector3 GetNewPos(Vector3 pos, float offset)
+        {
+            var self = BoundsManager.Inst;
+
+            float boundsWidth = self.BoundsWidth;
+            float boundsHeight = self.BoundsHeight;
+
+            if (pos.x < (-boundsWidth - offset * 0.5f))
             {
-                obj.transform.position = teleportPos;
+                return new Vector3(pos.x + boundsWidth * 2, pos.y, pos.z);
             }
+            if (pos.x > (boundsWidth + offset * 0.5f))
+            {
+                return new Vector3(pos.x - boundsWidth * 2, pos.y, pos.z);
+            }
+            if (pos.z < (-boundsHeight - offset * 0.5f))
+            {
+                return new Vector3(pos.x, pos.y, pos.z + boundsHeight * 2);
+            }
+            if (pos.z > (boundsHeight + offset * 0.5f))
+            {
+                return new Vector3(pos.x, pos.y, pos.z - boundsHeight * 2);
+            }
+
+            return pos;
         }
 
-        private void RecalculateBounds()
-        {
-            var cam = Camera.main;
-            var point = cam.ScreenToWorldPoint(new Vector2(Screen.width, Screen.height));
-            BoundsWidth = point.x;
-            BoundsHeight = point.z;
-        }
-
-        public void Track(GameObject obj)
+        public void Add(GameObject obj)
         {
             var trackable = obj.GetComponent<IBoundsTrackable>();
             if (trackable != null && !_inBoundsList.ContainsKey(obj))
@@ -60,30 +76,14 @@ namespace Scripts.Components
             }
         }
 
-        public void StopTracking(GameObject obj) => _inBoundsList.Remove(obj);
-        public bool IsInBounds(GameObject obj) => _inBoundsList.ContainsKey(obj);
-        public bool ShouldTeleport(GameObject obj, float offset) => CalculateNewPos(obj.transform.position, offset) != obj.transform.position;
-
-        private Vector3 CalculateNewPos(Vector3 pos, float offset)
+        public void Remove(GameObject obj) => _inBoundsList.Remove(obj);
+        
+        private void RecalculateBounds()
         {
-            if (pos.x < (-BoundsWidth - offset * 0.5f))
-            {
-                return new Vector3(pos.x + BoundsWidth * 2, pos.y, pos.z);
-            }
-            if (pos.x > (BoundsWidth + offset * 0.5f))
-            {
-                return new Vector3(pos.x - BoundsWidth * 2, pos.y, pos.z);
-            }
-            if (pos.z < (-BoundsHeight - offset * 0.5f))
-            {
-                return new Vector3(pos.x, pos.y, pos.z + BoundsHeight * 2);
-            }
-            if (pos.z > (BoundsHeight + offset * 0.5f))
-            {
-                return new Vector3(pos.x, pos.y, pos.z - BoundsHeight * 2);
-            }
-
-            return pos;
+            var cam = Camera.main;
+            var point = cam.ScreenToWorldPoint(new Vector2(Screen.width, Screen.height));
+            BoundsWidth = point.x;
+            BoundsHeight = point.z;
         }
     }
 }

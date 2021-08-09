@@ -1,28 +1,46 @@
 using System.Collections;
 using System.Collections.Generic;
+using Scripts.Util;
 using UnityEngine;
 
 namespace Scripts.Components
 {
     public class Asteroid : MonoBehaviour, IBoundsTrackable
     {
-        [SerializeField] private int _shardCount = 3;
         [SerializeField] private bool _isShard = false;
+        [SerializeField] private Vector2 _shardsCount;
         [SerializeField] private GameObject _explosion;
         [SerializeField] private GameObject _shard;
 
         private Rigidbody _rb;
-        private Coroutine _layerCoroutine;
-
-        public float BoundsOffset => transform.localScale.x;
-
+        
         void Awake()
         {
             _rb = GetComponent<Rigidbody>();
         }
 
-        public void OnBoundsReached() => BoundsManager.Inst.TryTeleport(gameObject);
+        void OnCollisionEnter(Collision collision)
+        {
+            var bullet = collision.transform.root.GetComponent<Bullet>();
+            if (bullet)
+            {
+                bullet.OnHit();
+                OnAttacked(collision);
+            }
+        }
+
+        public void UpdateBounds()
+        {
+            var pos = transform.position;
+            float offset = transform.localScale.x;
+
+            if (!BoundsManager.GetInBounds(pos, offset))
+            {
+                transform.position = BoundsManager.GetNewPos(transform.position, transform.localScale.x);
+            }
+        }
         
+        // Gets called only from spawner
         public void Launch(float speed)
         {
             _rb.velocity = transform.forward * speed;
@@ -39,15 +57,14 @@ namespace Scripts.Components
 
         private IEnumerator UpdateLayerCoroutine()
         {
-            var pos = transform.position;
-            var bounds = BoundsManager.Inst;
-
-            while (bounds.ShouldTeleport(gameObject, BoundsOffset))
+            while (!BoundsManager.GetInBounds(transform.position, transform.localScale.x))
             {
                 yield return null;
             }
 
             yield return new WaitForSeconds(1f); // To make sure it's not on the edge, bc it looks ugly
+
+            BoundsManager.Inst.Add(gameObject);
 
             var targetLayer = LayerMask.NameToLayer("Bounds");
             gameObject.layer = targetLayer;
@@ -55,49 +72,38 @@ namespace Scripts.Components
             {
                 child.gameObject.layer = targetLayer;
             }
-            
-            BoundsManager.Inst.Track(gameObject);
-
-            if (_layerCoroutine != null)
-            {
-                StopCoroutine(_layerCoroutine);
-                _layerCoroutine = null;
-            }
         }
 
         public void OnAttacked(Collision collision)
         {
-            BoundsManager.Inst.StopTracking(gameObject);
+            BoundsManager.Inst.Remove(gameObject);
             ObjectPooler.Inst.Return(_isShard ? PoolItem.MeteorShard : PoolItem.Meteor, gameObject);
 
-            ScoreManager.Inst.DoDelta(_isShard ? 500 : 1000);
+            ScoreManager.Inst.TargetKilled(_isShard);
 
             if (!_isShard)
             {
-                float range = 0.5f;
-                for (int i = 1; i <= _shardCount; i++)
-                {
-                    float percent = (float)i / (float)_shardCount;
-                    var offset = new Vector3(Mathf.Cos(percent * Mathf.PI * 2) * range, 0f,
-                        Mathf.Sin(percent * Mathf.PI * 2) * range);
-
-                    var shard = ObjectPooler.Inst.Get(PoolItem.MeteorShard, transform.position + offset);
-                    shard.transform.LookAt(-transform.position);
-                    shard.GetComponent<Asteroid>().Launch(2f);
-                }
+                SpawnShards();
             }
 
             var fx = Instantiate(_explosion);
             fx.transform.position = collision.contacts[0].point;
         }
 
-        void OnCollisionEnter(Collision collision)
+        private void SpawnShards()
         {
-            var bullet = collision.transform.root.GetComponent<Bullet>();
-            if (bullet)
+            float range = 0.5f;
+            int count = (int)(_shardsCount.x + Random.Range(0f, 1f) * _shardsCount.y + 0.5f);
+            float angleOffset = Mathf.PI * 2 * Random.Range(0f, 1f);
+            for (int i = 1; i <= count; i++)
             {
-                bullet.OnHit();
-                OnAttacked(collision);
+                float percent = (float)i / (float)count;
+                float angle = angleOffset + percent * Mathf.PI * 2;
+                var offset = new Vector3(Mathf.Cos(angle) * range, 0f, Mathf.Sin(angle) * range);
+
+                var shard = ObjectPooler.Inst.Get(PoolItem.MeteorShard, transform.position + offset);
+                shard.GetComponent<Rigidbody>().velocity = offset.normalized * Random.Range(3f, 5f);
+                BoundsManager.Inst.Add(shard);
             }
         }
     }

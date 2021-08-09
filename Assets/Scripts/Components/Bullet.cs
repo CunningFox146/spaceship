@@ -11,23 +11,24 @@ namespace Scripts.Components
 
         private Rigidbody _rb;
 
-        public float BoundsOffset => transform.localScale.x;
-
         void Awake()
         {
             _rb = GetComponent<Rigidbody>();
         }
 
-        public void OnBoundsReached()
+        public void UpdateBounds()
         {
-            BoundsManager.Inst.StopTracking(gameObject);
-            ObjectPooler.Inst.Return(PoolItem.Bullet, gameObject);
+            if (!BoundsManager.GetInBounds(transform.position, transform.localScale.x))
+            {
+                BoundsManager.Inst.Remove(gameObject);
+                ObjectPooler.Inst.Return(PoolItem.Bullet, gameObject);
+            }
         }
 
         public void Launch(GameObject launcher, Collider coll)
         {
             //Physics.IgnoreCollision(_collider, coll);
-            BoundsManager.Inst.Track(gameObject);
+            BoundsManager.Inst.Add(gameObject);
             _rb.velocity = _speed * launcher.transform.forward;
 
             transform.rotation = launcher.transform.rotation;
@@ -35,7 +36,7 @@ namespace Scripts.Components
 
         public void OnHit()
         {
-            BoundsManager.Inst.StopTracking(gameObject);
+            BoundsManager.Inst.Remove(gameObject);
             ObjectPooler.Inst.Return(PoolItem.Bullet, gameObject);
         }
     }

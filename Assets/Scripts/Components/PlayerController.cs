@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace Scripts.Components
 {
@@ -23,9 +25,7 @@ namespace Scripts.Components
         private float _rotationTime;
         private float _inputV;
         private float _inputH;
-
-        public float BoundsOffset => transform.localScale.x;
-
+        
         void Awake()
         {
             _rb = GetComponent<Rigidbody>();
@@ -35,8 +35,8 @@ namespace Scripts.Components
 
         void Start()
         {
-            BoundsManager.Inst.Track(gameObject);
-
+            BoundsManager.Inst.Add(gameObject);
+            
             _health.OnHealthChanged += OnHealthChangedHandler;
             _health.OnDeath += OnDeathHandler;
         }
@@ -72,7 +72,24 @@ namespace Scripts.Components
             Move(speed);
         }
 
-        public void OnBoundsReached() => BoundsManager.Inst.TryTeleport(gameObject);
+        private void OnCollisionEnter(Collision collision)
+        {
+            if (_blinkCoroutine == null) // We're invincible
+            {
+                _health.DoDelta(-1);
+            }
+        }
+
+        public void UpdateBounds()
+        {
+            var pos = transform.position;
+            float offset = transform.localScale.x;
+
+            if (!BoundsManager.GetInBounds(pos, offset))
+            {
+                transform.position = BoundsManager.GetNewPos(transform.position, transform.localScale.x);
+            }
+        }
 
         private void OnDeathHandler()
         {
@@ -92,7 +109,6 @@ namespace Scripts.Components
             CameraManager.Inst.Shake(1f, .075f);
             Invoke("Explode", 1f);
             
-
             enabled = false;
         }
 
@@ -111,7 +127,7 @@ namespace Scripts.Components
         private void Explode()
         {
             CameraManager.Inst.Shake(1f, .1f);
-            BoundsManager.Inst.StopTracking(gameObject);
+            BoundsManager.Inst.Remove(gameObject);
             Instantiate(_playerExplosion).transform.position = transform.position;
             Destroy(gameObject);
         }
@@ -169,14 +185,6 @@ namespace Scripts.Components
             float angleFactor = Vector3.Angle(vel, targetVel) / _maxAngleFactor; // How much force do we need to fix our direction
 
             _rb.AddForce(targetVel + (-vel * angleFactor), ForceMode.Acceleration);
-        }
-
-        private void OnCollisionEnter(Collision collision)
-        {
-            if (_blinkCoroutine == null)
-            {
-                _health.DoDelta(-1);
-            }
         }
     }
 }

@@ -7,6 +7,9 @@ namespace Scripts.Components
 {
     public class ScoreManager : Singleton<ScoreManager>
     {
+        [SerializeField] private int _asteroidScore = 250;
+        [SerializeField] private int _shardScore = 100;
+
         public event Action<int> OnScoreChanged;
         public event Action<bool> OnGameEnd;
 
@@ -26,6 +29,11 @@ namespace Scripts.Components
             IsWin = win;
 
             OnGameEnd?.Invoke(win);
+        }
+
+        public void TargetKilled(bool isShard)
+        {
+            DoDelta(isShard ? _shardScore : _asteroidScore);
         }
     }
 }
