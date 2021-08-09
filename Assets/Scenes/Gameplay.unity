@@ -353,7 +353,7 @@ GameObject:
   - component: {fileID: 526948485}
   - component: {fileID: 526948487}
   m_Layer: 0
-  m_Name: CameraLeft
+  m_Name: CameraRight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5626,6 +5626,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2c3bca640ecf9849994d8e987c1fc67, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _camLeft: {fileID: 1987024259}
+  _camRight: {fileID: 526948485}
+  _camTop: {fileID: 2038199760}
+  _camBottom: {fileID: 293739811}
 --- !u!1 &1238626059
 GameObject:
   m_ObjectHideFlags: 0
@@ -5655,6 +5659,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3afe2d0b7cfd9c648b801d9e5e34463d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _asteroidScore: 250
+  _shardScore: 100
 --- !u!4 &1238626061
 Transform:
   m_ObjectHideFlags: 0
@@ -6209,7 +6215,7 @@ GameObject:
   - component: {fileID: 1987024259}
   - component: {fileID: 1987024260}
   m_Layer: 0
-  m_Name: CameraRight
+  m_Name: CameraLeft
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

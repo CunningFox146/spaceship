@@ -29,6 +29,14 @@ namespace Scripts.Components
             }
         }
 
+        public void RecalculateBounds()
+        {
+            var cam = Camera.main;
+            var point = cam.ScreenToWorldPoint(new Vector2(Screen.width, Screen.height));
+            BoundsWidth = point.x;
+            BoundsHeight = point.z;
+        }
+
         public static bool GetInBounds(Vector3 pos, float offset)
         {
             var self = BoundsManager.Inst;
@@ -77,13 +85,5 @@ namespace Scripts.Components
         }
 
         public void Remove(GameObject obj) => _inBoundsList.Remove(obj);
-        
-        private void RecalculateBounds()
-        {
-            var cam = Camera.main;
-            var point = cam.ScreenToWorldPoint(new Vector2(Screen.width, Screen.height));
-            BoundsWidth = point.x;
-            BoundsHeight = point.z;
-        }
     }
 }
