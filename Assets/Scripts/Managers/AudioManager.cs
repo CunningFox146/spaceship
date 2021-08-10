@@ -11,6 +11,7 @@ namespace Asteroids.Managers
     {
         private const float MinPitch = 0.5f;
         private const float MaxPitch = 1f;
+        private const float MinRoom = -10000f;
 
         [SerializeField] private AudioMixer _mixer;
 
@@ -32,7 +33,6 @@ namespace Asteroids.Managers
             DontDestroyOnLoad(gameObject);
 
              _mixer.GetFloat("MusicPitch", out _musicPitch);
-             _mixer.GetFloat("MusicRoom", out _musicRoom);
 
             _sound = GetComponent<SoundsEmitter>();
 
@@ -73,7 +73,7 @@ namespace Asteroids.Managers
         {
             float progress = (MaxPitch - _musicPitch) / MinPitch;
             _mixer.SetFloat("MusicPitch", _musicPitch);
-            _mixer.SetFloat("MusicRoom", _musicRoom * (1f - progress));
+            _mixer.SetFloat("MusicRoom", MinRoom * (1f - progress));
         }
     }
 }
