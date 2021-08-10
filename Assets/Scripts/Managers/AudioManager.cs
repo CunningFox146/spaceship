@@ -16,6 +16,7 @@ namespace Asteroids.Managers
 
         private SoundsEmitter _sound;
         private float _musicPitch;
+        private float _musicRoom;
 
         public SoundsEmitter GetSound() => _sound;
 
@@ -31,6 +32,7 @@ namespace Asteroids.Managers
             DontDestroyOnLoad(gameObject);
 
              _mixer.GetFloat("MusicPitch", out _musicPitch);
+             _mixer.GetFloat("MusicRoom", out _musicRoom);
 
             _sound = GetComponent<SoundsEmitter>();
 
@@ -69,7 +71,9 @@ namespace Asteroids.Managers
         
         private void UpdatePitch()
         {
+            float progress = (MaxPitch - _musicPitch) / MinPitch;
             _mixer.SetFloat("MusicPitch", _musicPitch);
+            _mixer.SetFloat("MusicRoom", _musicRoom * (1f - progress));
         }
     }
 }
