@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Asteroids.Managers;
+using Asteroids.SoundSystem;
 using UnityEngine;
 
 namespace Asteroids.Player
@@ -10,10 +11,12 @@ namespace Asteroids.Player
         [SerializeField] private GameObject _bullet;
         [SerializeField] private float _fireRate = 0.5f;
 
+        private SoundsEmitter _sound;
         private float _fireCooldown = 0f;
 
         void Update()
         {
+            _sound = GetComponent<SoundsEmitter>();
             _fireCooldown += Time.deltaTime;
         }
 
@@ -23,7 +26,7 @@ namespace Asteroids.Player
             {
                 return;
             }
-
+            _sound.Play("Shoot");
             _fireCooldown = 0f;
             var bullet = ObjectPooler.Inst.Get(PoolItem.Bullet);
             bullet.transform.position = transform.position;

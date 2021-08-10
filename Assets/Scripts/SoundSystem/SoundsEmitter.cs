@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Asteroids.SoundSystem
 {
-    public class SoundEmitter : MonoBehaviour
+    public class SoundsEmitter : MonoBehaviour
     {
         private Dictionary<string, AudioSource> _playing;
 
@@ -15,14 +15,14 @@ namespace Asteroids.SoundSystem
             _playing = new Dictionary<string, AudioSource>();
         }
 
-        public void Play(string path, string soundName = null, float delay = 0f)
+        public AudioSource Play(string path, string soundName = null, float delay = 0f)
         {
             var sound = SoundLoader.Get(path);
 
             if (!sound)
             {
                 Debug.LogWarning($"Failed to get sound {path}");
-                return;
+                return null;
             }
 
             var source = GetSource(path);
@@ -43,6 +43,8 @@ namespace Asteroids.SoundSystem
             {
                 _playing.Add(soundName, source);
             }
+
+            return source;
         }
 
         public void Stop(string soundName, float delay = 0f)

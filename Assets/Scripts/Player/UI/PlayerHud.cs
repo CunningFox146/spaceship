@@ -1,5 +1,6 @@
 ﻿using System;
 using Asteroids.Asteroid;
+using Asteroids.Managers;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -91,13 +92,14 @@ namespace Asteroids.Player.UI
         private void OnDeathHandler()
         {
             Invoke("ShowGameEndPanel", 1.5f);
-
             _hitOverlay.OnHit();
             _healthDisplay.SetHealth(0);
         }
 
         private void ShowGameEndPanel()
         {
+            AudioManager.Inst.MusicPitchDown();
+
             _gameEndPanel.gameObject.SetActive(true);
             _gameEndPanel.Init();
         }

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Asteroids.Managers;
 using Asteroids.Player;
+using Asteroids.SoundSystem;
 using Asteroids.Util;
 using UnityEngine;
 
@@ -27,7 +28,7 @@ namespace Asteroids.Asteroid
             if (bullet)
             {
                 bullet.OnHit();
-                OnAttacked(collision);
+                OnHit(collision);
             }
         }
 
@@ -77,7 +78,7 @@ namespace Asteroids.Asteroid
             }
         }
 
-        public void OnAttacked(Collision collision)
+        public void OnHit(Collision collision)
         {
             BoundsManager.Inst.Remove(gameObject);
             ObjectPooler.Inst.Return(_isShard ? PoolItem.MeteorShard : PoolItem.Meteor, gameObject);

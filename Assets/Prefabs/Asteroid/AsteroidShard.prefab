@@ -61,8 +61,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5da9ce35697ec247b2803a633143fea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _shardCount: 3
   _isShard: 1
+  _shardsCount: {x: 0, y: 0}
   _explosion: {fileID: 4198486382001218002, guid: a555f93bf917976409b63dbd2ef15006, type: 3}
   _shard: {fileID: 0}
 --- !u!64 &3596674271373394950

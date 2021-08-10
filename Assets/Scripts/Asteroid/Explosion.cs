@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Asteroids.SoundSystem;
 using UnityEngine;
 
 namespace Asteroids.Asteroid
@@ -11,6 +12,12 @@ namespace Asteroids.Asteroid
 
         void Start()
         {
+            var sound = GetComponent<SoundsEmitter>();
+            if (sound != null)
+            {
+                sound.Play("MeteorDown");
+            }
+            
             var near = Physics.OverlapSphere(transform.position, _radius);
             foreach (Collider coll in near)
             {

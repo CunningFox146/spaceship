@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Asteroids.Managers;
+using Asteroids.SoundSystem;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -19,6 +20,7 @@ namespace Asteroids.Player
         [SerializeField] private GameObject _model;
         [SerializeField] private GameObject _playerExplosion;
         
+        private SoundsEmitter _sound;
         private Rigidbody _rb;
         private PlayerGun _gun;
         private Health _health;
@@ -30,6 +32,7 @@ namespace Asteroids.Player
         
         void Awake()
         {
+            _sound = GetComponent<SoundsEmitter>();
             _rb = GetComponent<Rigidbody>();
             _gun = GetComponent<PlayerGun>();
             _health = GetComponent<Health>();
@@ -133,6 +136,7 @@ namespace Asteroids.Player
             _rb.angularVelocity = new Vector3(Random.Range(forceMin, forceMax), Random.Range(forceMin, forceMax), Random.Range(forceMin, forceMax));
 
             _fire.Play();
+            _sound.Play("PlayerDeathPre");
 
             CameraManager.Inst.Shake(1f, .075f);
             Invoke("Explode", 1f);
@@ -152,10 +156,12 @@ namespace Asteroids.Player
 
             _blinkCoroutine = StartCoroutine(DamageBlinkCoroutine(1f));
             CameraManager.Inst.Shake(.5f, .1f);
+            _sound.Play("PlayerHit");
         }
 
         private void Explode()
         {
+            _sound.Play("PlayerDeath");
             CameraManager.Inst.Shake(1f, .1f);
             BoundsManager.Inst.Remove(gameObject);
             Instantiate(_playerExplosion).transform.position = transform.position;
