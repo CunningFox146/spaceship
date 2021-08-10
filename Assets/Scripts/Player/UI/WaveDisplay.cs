@@ -26,7 +26,7 @@ namespace Asteroids.Player.UI
 
         private void OnWaveChangedHandler(int wave)
         {
-            AudioManager.Inst.GetSound().Play("WaveChanged");
+            AudioManager.Inst.GetSound().Play("UI/WaveChanged");
             _text.text = $"WAVE {wave + 1}";
         }
     }

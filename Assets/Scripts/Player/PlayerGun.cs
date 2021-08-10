@@ -26,7 +26,7 @@ namespace Asteroids.Player
             {
                 return;
             }
-            _sound.Play("Shoot");
+            _sound.Play("Player/Shoot");
             _fireCooldown = 0f;
             var bullet = ObjectPooler.Inst.Get(PoolItem.Bullet);
             bullet.transform.position = transform.position;

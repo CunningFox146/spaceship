@@ -48,7 +48,7 @@ namespace Asteroids.Player.UI
             {
                 LeanTween.value(0f, (float)highScore, 2f)
                     .setDelay(1f)
-                    .setOnStart(()=> AudioManager.Inst.GetSound().Play("ScoreFill"))
+                    .setOnStart(()=> AudioManager.Inst.GetSound().Play("UI/ScoreFill"))
                     .setOnUpdate((float val) => text.text = $"HIGH SCORE {((int)val):D6}")
                     .setOnComplete(DisplayHighScoreInfo);
                 return;
@@ -70,7 +70,7 @@ namespace Asteroids.Player.UI
                     ? "NEW HIGH SCORE!"
                     : $"<color=red>{highScore - score}</color> POINTS LEFT";
             
-            AudioManager.Inst.GetSound().Play(isNewHighScore ? "HighScore" : "NoHighScore");
+            AudioManager.Inst.GetSound().Play(isNewHighScore ? "UI/HighScore" : "UI/NoHighScore");
 
             StartCoroutine(ShakeHighScore(0.5f));
             StartCoroutine(AnyKeyCoroutine());

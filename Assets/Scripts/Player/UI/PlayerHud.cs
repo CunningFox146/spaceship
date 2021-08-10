@@ -46,7 +46,7 @@ namespace Asteroids.Player.UI
 
             if (_gameEndPanel.IsDone && Input.anyKeyDown && !_fade.isFading)
             {
-                AudioManager.Inst.GetSound().Play("RestartGame");
+                AudioManager.Inst.GetSound().Play("UI/RestartGame");
                 _fade.gameObject.SetActive(true);
                 _fade.Show(() =>
                 {

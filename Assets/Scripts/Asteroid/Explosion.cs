@@ -15,7 +15,7 @@ namespace Asteroids.Asteroid
             var sound = GetComponent<SoundsEmitter>();
             if (sound != null)
             {
-                sound.Play("MeteorDown");
+                sound.Play("Asteroids/MeteorDown");
             }
             
             var near = Physics.OverlapSphere(transform.position, _radius);

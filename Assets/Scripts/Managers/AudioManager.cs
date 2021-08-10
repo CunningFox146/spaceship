@@ -42,7 +42,7 @@ namespace Asteroids.Managers
 
         void Start()
         {
-            _sound.Play("MainTheme");
+            _sound.Play("Music/MainTheme");
         }
 
         public void MusicPitchUp()

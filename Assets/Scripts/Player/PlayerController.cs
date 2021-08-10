@@ -25,6 +25,7 @@ namespace Asteroids.Player
         private PlayerGun _gun;
         private Health _health;
         private Coroutine _blinkCoroutine; // Also used to check if we're invincible
+        private AudioSource _fireSound;
         private bool _isCutscene;
         private float _rotationTime;
         private float _inputV;
@@ -40,17 +41,20 @@ namespace Asteroids.Player
 
         void Start()
         {
+            _fireSound = _sound.Play("Player/ShipLoop");
+
             BoundsManager.Inst.Add(gameObject);
             
             _health.OnHealthChanged += OnHealthChangedHandler;
             _health.OnDeath += OnDeathHandler;
 
             StartCutscene();
+            UpdateFire();
         }
 
         private void StartCutscene()
         {
-            _sound.Play("ShipStart");
+            _sound.Play("Player/ShipStart");
 
             var originalLayer = _model.layer;
             var targetLayer = LayerMask.NameToLayer("Default");
@@ -140,7 +144,7 @@ namespace Asteroids.Player
             _rb.angularVelocity = new Vector3(Random.Range(forceMin, forceMax), Random.Range(forceMin, forceMax), Random.Range(forceMin, forceMax));
 
             _fire.Play();
-            _sound.Play("PlayerDeathPre");
+            _sound.Play("Player/PlayerDeathPre");
 
             CameraManager.Inst.Shake(1f, .075f);
             Invoke("Explode", 1f);
@@ -160,12 +164,12 @@ namespace Asteroids.Player
 
             _blinkCoroutine = StartCoroutine(DamageBlinkCoroutine(1f));
             CameraManager.Inst.Shake(.5f, .1f);
-            _sound.Play("PlayerHit");
+            _sound.Play("Player/PlayerHit");
         }
 
         private void Explode()
         {
-            _sound.Play("PlayerDeath");
+            _sound.Play("Player/PlayerDeath");
             CameraManager.Inst.Shake(1f, .1f);
             BoundsManager.Inst.Remove(gameObject);
             Instantiate(_playerExplosion).transform.position = transform.position;
@@ -190,18 +194,20 @@ namespace Asteroids.Player
 
         private void UpdateFire()
         {
-            if (_isCutscene) return;
-            if (_inputV != 0f)
+            if (_inputV != 0f || _isCutscene)
             {
                 if (!_fire.isPlaying)
                 {
+                    _fireSound.Play();
                     _fire.Play();
                 }
+
                 return;
             }
 
             if (_fire.isPlaying)
             {
+                _fireSound.Pause();
                 _fire.Stop();
             }
         }
