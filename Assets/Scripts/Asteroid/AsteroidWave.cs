@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Asteroids.Asteroid
 {
-    [CreateAssetMenu(fileName = "AsteroidWave", menuName = "ScriptableObjects/AsteroidWave", order = 1)]
+    [CreateAssetMenu(fileName = "AsteroidWave", menuName = "ScriptableObjects/Asteroid Wave", order = 1)]
     public class AsteroidWave : ScriptableObject
     {
         public int asteroidsCount = 1;
