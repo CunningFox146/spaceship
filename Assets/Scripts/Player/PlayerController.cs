@@ -50,6 +50,8 @@ namespace Asteroids.Player
 
         private IEnumerator CutsceneCoroutine()
         {
+            _sound.Play("ShipStart");
+
             var originalLayer = _model.layer;
             var targetLayer = LayerMask.NameToLayer("Default");
             var startPos = _model.transform.localPosition;

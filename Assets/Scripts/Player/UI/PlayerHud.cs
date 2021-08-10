@@ -36,12 +36,12 @@ namespace Asteroids.Player.UI
             _health.OnHealthChanged += OnHealthChangedHandler;
             _health.OnDeath += OnDeathHandler;
         }
-
-        // Not sure if it should go here or in player controller
+        
         void Update()
         {
             if (_gameEndPanel.IsDone && Input.anyKeyDown && !_fade.isFading)
             {
+                AudioManager.Inst.GetSound().Play("RestartGame");
                 _fade.gameObject.SetActive(true);
                 _fade.Show(() =>
                 {

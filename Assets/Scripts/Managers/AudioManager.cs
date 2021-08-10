@@ -17,6 +17,8 @@ namespace Asteroids.Managers
         private SoundsEmitter _sound;
         private float _musicPitch;
 
+        public SoundsEmitter GetSound() => _sound;
+
         public override void Awake()
         {
             if (AudioManager.Inst != null)

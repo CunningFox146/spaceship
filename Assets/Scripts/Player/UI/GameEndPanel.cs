@@ -48,6 +48,7 @@ namespace Asteroids.Player.UI
             {
                 LeanTween.value(0f, (float)highScore, 2f)
                     .setDelay(1f)
+                    .setOnStart(()=> AudioManager.Inst.GetSound().Play("ScoreFill"))
                     .setOnUpdate((float val) => text.text = $"HIGH SCORE {((int)val):D6}")
                     .setOnComplete(DisplayHighScoreInfo);
                 return;
@@ -61,13 +62,15 @@ namespace Asteroids.Player.UI
         {
             float highScore = ScoreManager.Inst.highScore;
             float score = ScoreManager.Inst.Score;
-            bool isHighScore = score >= highScore;
+            bool isNewHighScore = score >= highScore;
 
             _newHighScore.gameObject.SetActive(true);
             _newHighScore.GetComponent<Text>().text =
-                isHighScore
+                isNewHighScore
                     ? "NEW HIGH SCORE!"
                     : $"<color=red>{highScore - score}</color> POINTS LEFT";
+            
+            AudioManager.Inst.GetSound().Play(isNewHighScore ? "HighScore" : "NoHighScore");
 
             StartCoroutine(ShakeHighScore(0.5f));
             StartCoroutine(AnyKeyCoroutine());

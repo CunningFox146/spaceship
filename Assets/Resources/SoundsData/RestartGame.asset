@@ -10,15 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 34e5ec643d3697445a3e5a16f5faba0b, type: 3}
-  m_Name: ShipLoop
+  m_Name: RestartGame
   m_EditorClassIdentifier: 
   clips:
-  - {fileID: 8300000, guid: 0326059094407f64c901375592cb51b9, type: 3}
+  - {fileID: 8300000, guid: 244ff7b5029a91148b431a4e95c863d8, type: 3}
   soundType: 0
-  looping: 1
+  looping: 0
   volume: 1
   pitch:
-  - 1
+  - 0.95
+  - 1.05
   mixerGroup: {fileID: 534333754702658551, guid: 185f2c6b75328a34884224c354888fe4, type: 2}
   minDistance: 1
   maxDistance: 30
