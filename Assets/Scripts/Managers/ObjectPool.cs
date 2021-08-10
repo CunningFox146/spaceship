@@ -13,6 +13,7 @@ namespace Asteroids
         Meteor,
         MeteorShard,
         Bullet,
+        AudioSource,
     }
 
     [Serializable]

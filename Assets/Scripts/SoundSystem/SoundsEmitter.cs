@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Asteroids.Managers;
 using Asteroids.Util;
 using UnityEngine;
 
@@ -54,19 +55,20 @@ namespace Asteroids.SoundSystem
             var source = _playing[soundName];
             if (delay > 0f)
             {
-                Destroy(source.gameObject, delay);
+                DestroySource(source, delay);
                 return;
             }
 
-            Destroy(source.gameObject);
+            DestroySource(source);
         }
 
         private AudioSource GetSource(string soundName)
         {
-            var obj = new GameObject("SoundEmitter: " + soundName);
+            var obj = ObjectPooler.Inst.Get(PoolItem.AudioSource);
+            obj.name = "SoundEmitter: " + soundName;
             obj.transform.parent = gameObject.transform;
 
-            return obj.AddComponent<AudioSource>();
+            return obj.GetComponent<AudioSource>();
         }
 
         private void InitSource(AudioSource source, SoundData sound)
@@ -84,8 +86,25 @@ namespace Asteroids.SoundSystem
         {
             if (!source.loop)
             {
-                Destroy(source.gameObject, delay + source.clip.length);
+                DestroySource(source, delay + source.clip.length);
             }
+        }
+
+        private void DestroySource(AudioSource source, float delay = 0f)
+        {
+            void DestroyObj()
+            {
+                source.Stop();
+                ObjectPooler.Inst.Return(PoolItem.AudioSource, source.gameObject);
+            }
+
+            if (delay > 0f)
+            {
+                LeanTween.delayedCall(delay, DestroyObj);
+                return;
+            }
+
+            DestroyObj();
         }
     }
 }

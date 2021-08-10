@@ -16,7 +16,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 2b33b1dc92851784e875cef26c146e3b, type: 3}
   soundType: 0
   looping: 0
-  volume: 1
+  volume: 0.7
   pitch:
   - 1
   mixerGroup: {fileID: 534333754702658551, guid: 185f2c6b75328a34884224c354888fe4, type: 2}
