@@ -12,6 +12,7 @@ namespace Asteroids.Player.UI
         [SerializeField] private HitOverlay _hitOverlay;
         [SerializeField] private HealthDisplay _healthDisplay;
         [SerializeField] private Text _nextWave;
+        [SerializeField] private Fade _fade;
 
         private Health _health;
 
@@ -25,7 +26,11 @@ namespace Asteroids.Player.UI
         void Start()
         {
             _healthDisplay.Init(_health.maxHealth);
-            
+            _fade.Hide(() =>
+            {
+                _fade.gameObject.SetActive(false);
+            });
+
             AsteroidsSpawner.Inst.OnWaveChanged += OnWaveChangedHandler;
             _health.OnHealthChanged += OnHealthChangedHandler;
             _health.OnDeath += OnDeathHandler;
@@ -34,9 +39,13 @@ namespace Asteroids.Player.UI
         // Not sure if it should go here or in player controller
         void Update()
         {
-            if (_gameEndPanel.IsDone && Input.anyKeyDown)
+            if (_gameEndPanel.IsDone && Input.anyKeyDown && !_fade.isFading)
             {
-                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+                _fade.gameObject.SetActive(true);
+                _fade.Show(() =>
+                {
+                    SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+                });
             }
         }
 
