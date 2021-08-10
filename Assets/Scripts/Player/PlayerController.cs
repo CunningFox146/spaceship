@@ -25,7 +25,7 @@ namespace Asteroids.Player
         private PlayerGun _gun;
         private Health _health;
         private Coroutine _blinkCoroutine; // Also used to check if we're invincible
-        private bool isCutscene;
+        private bool _isCutscene;
         private float _rotationTime;
         private float _inputV;
         private float _inputH;
@@ -45,10 +45,10 @@ namespace Asteroids.Player
             _health.OnHealthChanged += OnHealthChangedHandler;
             _health.OnDeath += OnDeathHandler;
 
-            StartCoroutine(CutsceneCoroutine());
+            StartCutscene();
         }
 
-        private IEnumerator CutsceneCoroutine()
+        private void StartCutscene()
         {
             _sound.Play("ShipStart");
 
@@ -56,24 +56,26 @@ namespace Asteroids.Player
             var targetLayer = LayerMask.NameToLayer("Default");
             var startPos = _model.transform.localPosition;
 
-            isCutscene = true;
+            _isCutscene = true;
             _model.layer = targetLayer;
             _fire.gameObject.layer = targetLayer;
             _model.transform.localPosition += Vector3.forward * -3.5f;
             _fire.Play();
-            LeanTween.moveLocal(_model, startPos, 1f).setEaseOutCubic();
 
-            yield return new WaitForSeconds(1f);
-
-            isCutscene = false;
-            _model.layer = originalLayer;
-            _fire.gameObject.layer = originalLayer;
-            _fire.Stop();
+            LeanTween.moveLocal(_model, startPos, 1f)
+                .setEaseOutCubic()
+                .setOnComplete(() =>
+                {
+                    _isCutscene = false;
+                    _model.layer = originalLayer;
+                    _fire.gameObject.layer = originalLayer;
+                    _fire.Stop();
+                });
         }
 
         void Update()
         {
-            if (!isCutscene)
+            if (!_isCutscene)
             {
                 _inputV = Input.GetAxis("Vertical");
                 _inputH = Input.GetAxis("Horizontal");
@@ -188,7 +190,7 @@ namespace Asteroids.Player
 
         private void UpdateFire()
         {
-            if (isCutscene) return;
+            if (_isCutscene) return;
             if (_inputV != 0f)
             {
                 if (!_fire.isPlaying)

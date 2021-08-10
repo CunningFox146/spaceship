@@ -41,7 +41,7 @@ namespace Asteroids.Asteroid
 #if !DEBUG_POSITIONS
         void Start()
         {
-            Invoke("ReleaseWave", 1.25f);
+            LeanTween.delayedCall(1.5f, ReleaseWave);
         }
 #else
         void Update()

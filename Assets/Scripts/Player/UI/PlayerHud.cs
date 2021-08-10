@@ -39,6 +39,11 @@ namespace Asteroids.Player.UI
         
         void Update()
         {
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                Application.Quit();
+            }
+
             if (_gameEndPanel.IsDone && Input.anyKeyDown && !_fade.isFading)
             {
                 AudioManager.Inst.GetSound().Play("RestartGame");
