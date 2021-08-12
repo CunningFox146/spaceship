@@ -28,8 +28,11 @@ namespace Asteroids.Player
         private AudioSource _fireSound;
         private bool _isCutscene;
         private float _rotationTime;
-        private float _inputV;
-        private float _inputH;
+
+        public bool isMobile;
+        public float inputV;
+        public float inputH;
+        public bool isShooting;
         
         void Awake()
         {
@@ -79,15 +82,15 @@ namespace Asteroids.Player
 
         void Update()
         {
-            if (!_isCutscene)
+            if (!_isCutscene && !isMobile)
             {
-                _inputV = Input.GetAxis("Vertical");
-                _inputH = Input.GetAxis("Horizontal");
+                inputV = Input.GetAxis("Vertical");
+                inputH = Input.GetAxis("Horizontal");
             }
             
-            float angle = _inputH * _rotationSpeed * Time.deltaTime;
+            float angle = inputH * _rotationSpeed * Time.deltaTime;
 
-            if (_inputH != 0f)
+            if (inputH != 0f)
             {
                 _rotationTime += Time.deltaTime;
             }
@@ -99,7 +102,7 @@ namespace Asteroids.Player
             Rotate(angle, _passiveRotation * Time.deltaTime);
             UpdateFire();
 
-            if (Input.GetKey(KeyCode.Space))
+            if (isShooting || Input.GetKey(KeyCode.Space))
             {
                 _gun.Fire(_collider);
             }
@@ -107,7 +110,7 @@ namespace Asteroids.Player
 
         void FixedUpdate()
         {
-            float speed = _inputV * _moveSpeed * Time.deltaTime;
+            float speed = inputV * _moveSpeed * Time.deltaTime;
             Move(speed);
         }
 
@@ -194,7 +197,7 @@ namespace Asteroids.Player
 
         private void UpdateFire()
         {
-            if (_inputV != 0f || _isCutscene)
+            if (inputV != 0f || _isCutscene)
             {
                 if (!_fire.isPlaying)
                 {

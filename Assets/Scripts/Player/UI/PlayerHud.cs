@@ -27,6 +27,7 @@ namespace Asteroids.Player.UI
         void Start()
         {
             _healthDisplay.Init(_health.maxHealth);
+            _fade.gameObject.SetActive(true);
             _fade.Hide(() =>
             {
                 _fade.gameObject.SetActive(false);
